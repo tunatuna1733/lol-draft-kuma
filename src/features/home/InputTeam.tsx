@@ -1,0 +1,81 @@
+'use client';
+
+import { useState } from 'react';
+import { Box } from '@kuma-ui/core';
+import TextInput from '@/components/TextInput';
+import BlueButton from '@/components/BlueButton';
+
+const sendCreateRoomRequest = async (matchName: string, team1Name: string, team2Name: string) => {
+	const res = await fetch(
+		`http://localhost:443/createRoom?matchName=${matchName}&team1Name=${team1Name}&team2Name=${team2Name}`,
+	);
+	const resJson: { id: string } = await res.json();
+	return resJson.id;
+};
+
+const InputTeam = () => {
+	const [matchName, setMatchName] = useState('');
+	const [team1Name, setTeam1Name] = useState('Team 1');
+	const [team2Name, setTeam2Name] = useState('Team 2');
+	const [matchID, setMatchID] = useState<string>();
+
+	if (!matchID) {
+		return (
+			<Box width="60%" display={'flex'} flexDirection={'column'} gap={10}>
+				<TextInput
+					id="match-name-input"
+					label="Match name"
+					placeholder="Match name"
+					value={matchName}
+					setValue={setMatchName}
+					inputProps={{ borderColor: '#6b7280' }}
+				/>
+				<Box display="flex" flexDirection="row" width="100%" justify="space-between" alignItems="center">
+					<Box width="40%">
+						<TextInput id="team1-name-input" label="Team1 name" value={team1Name} setValue={setTeam1Name} />
+					</Box>
+					<Box width="40%">
+						<TextInput
+							id="team2-name-input"
+							label="Team2 name"
+							value={team2Name}
+							setValue={setTeam2Name}
+							inputProps={{ borderColor: '#991b1b' }}
+						/>
+					</Box>
+				</Box>
+				<Box display="flex" width="100%" justify="center" alignItems="center">
+					<BlueButton
+						onClick={async () => {
+							const id = await sendCreateRoomRequest(matchName, team1Name, team2Name);
+							setMatchID(id);
+						}}
+					>
+						Create Room
+					</BlueButton>
+				</Box>
+			</Box>
+		);
+	}
+
+	return (
+		<Box width="60%" display={'flex'} flexDirection={'column'} gap={10}>
+			<TextInput
+				id="team1-name"
+				label={team1Name}
+				value={`${window.location}${matchID}?team=Blue`}
+				isReadOnly={true}
+				inputProps={{ background: '#3b82f633' }}
+			/>
+			<TextInput
+				id="team2-name"
+				label={team2Name}
+				value={`${window.location}${matchID}?team=Red`}
+				isReadOnly={true}
+				inputProps={{ background: '#ef444433' }}
+			/>
+		</Box>
+	);
+};
+
+export default InputTeam;
