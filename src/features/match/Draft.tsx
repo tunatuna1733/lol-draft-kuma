@@ -22,7 +22,6 @@ const Draft = ({ roomID, team, champs }: Props) => {
 	const { sendMessage } = useWebSocket();
 
 	useEffect(() => {
-		console.log('Phase Data useEffect');
 		if (!phaseData.paused) {
 			if (phaseData.eta !== 0) {
 				setTimer((phaseData.eta - Date.now()) / 1000);
@@ -41,7 +40,6 @@ const Draft = ({ roomID, team, champs }: Props) => {
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
-		console.log('Room Data useEffect');
 		if (
 			roomData.currentPhase.kind !== phaseData.kind ||
 			roomData.currentPhase.team !== phaseData.team ||

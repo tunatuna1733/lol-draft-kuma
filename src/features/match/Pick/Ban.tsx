@@ -8,21 +8,35 @@ type Props = {
 	champID: string;
 	champName: string;
 	inFocus: boolean;
+	selectedChampID: string;
 };
 
-const Ban = ({ team, champID, champName, inFocus }: Props) => {
+const Ban = ({ team, champID, champName, inFocus, selectedChampID }: Props) => {
 	const height = 200;
 	const width = 110;
 	const url = `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champID}_0.jpg`;
+	const selectedUrl = `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${selectedChampID}_0.jpg`;
 
 	return (
 		<>
+			<style>{'@keyframes fadeinout { 0%{ opacity: 0.2;} 100%{ opacity: 0.6;} }'}</style>
 			<Box height={height} width={width} position={'relative'} id={`player-ban-${champID}`}>
 				{champID !== '' && (
 					<Image
 						fill={true}
 						src={url}
 						alt={champID}
+						style={{ objectFit: 'contain' }}
+						sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
+					/>
+				)}
+				{inFocus && selectedChampID !== '' && (
+					<Image
+						fill={true}
+						src={selectedUrl}
+						alt={selectedChampID}
 						style={{ objectFit: 'contain' }}
 						sizes="(max-width: 768px) 100vw,
               (max-width: 1200px) 50vw,
@@ -59,6 +73,17 @@ const Ban = ({ team, champID, champName, inFocus }: Props) => {
 						</svg>
 					</Box>
 				</Box>
+				{inFocus && (
+					<Box
+						position={'absolute'}
+						top={'0%'}
+						left={'0%'}
+						height={'100%'}
+						width={'100%'}
+						bg={'white'}
+						animation={'fadeinout 1s ease-in-out infinite alternate'}
+					/>
+				)}
 			</Box>
 			<Tooltip anchorSelect={`#player-ban-${champID}`} place="bottom" content={champName} style={{ zIndex: 200 }} />
 		</>

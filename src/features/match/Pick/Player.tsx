@@ -1,29 +1,41 @@
 import type { Team } from '@/types/lol';
-import { Box, Text } from '@kuma-ui/core';
+import { Box } from '@kuma-ui/core';
 import Image from 'next/image';
 import { Tooltip } from 'react-tooltip';
 
 type Props = {
-	name: string;
 	team: Team;
 	champID: string;
 	champName: string;
 	inFocus: boolean;
+	selectedChampID: string;
 };
 
-const Player = ({ name, team, champID, champName, inFocus }: Props) => {
+const Player = ({ team, champID, champName, inFocus, selectedChampID }: Props) => {
 	const height = 300;
 	const width = 165;
 	const url = `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champID}_0.jpg`;
+	const selectedUrl = `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${selectedChampID}_0.jpg`;
 
 	return (
 		<>
+			<style>{'@keyframes fadeinout { 0%{ opacity: 0.2;} 100%{ opacity: 0.6;} }'}</style>
 			<Box height={height} width={width} position={'relative'} id={`player-pick-${champID}`}>
 				{champID !== '' ? (
 					<Image
 						fill={true}
 						src={url}
 						alt={champID}
+						style={{ objectFit: 'contain' }}
+						sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
+					/>
+				) : inFocus && selectedChampID !== '' ? (
+					<Image
+						fill={true}
+						src={selectedUrl}
+						alt={selectedChampID}
 						style={{ objectFit: 'contain' }}
 						sizes="(max-width: 768px) 100vw,
               (max-width: 1200px) 50vw,
@@ -37,6 +49,17 @@ const Player = ({ name, team, champID, champName, inFocus }: Props) => {
 						height={'100%'}
 						width={'100%'}
 						bg={team === 'Blue' ? '#00B4FA33' : '#FF003C33'}
+					/>
+				)}
+				{inFocus && (
+					<Box
+						position={'absolute'}
+						top={'0%'}
+						left={'0%'}
+						height={'100%'}
+						width={'100%'}
+						bg={'white'}
+						animation={'fadeinout 1s linear infinite alternate'}
 					/>
 				)}
 				{/*

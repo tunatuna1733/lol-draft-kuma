@@ -23,11 +23,11 @@ const PickList = ({ champs }: Props) => {
 						{roomData.teams.Blue.players.map((player, index) => (
 							<Box display={'flex'} key={`Blue-Pick-${index}-${player.name}`}>
 								<Player
-									name={player.name}
 									team="Blue"
 									champID={player.champ}
 									champName={champs.find((c) => c.id === player.champ)?.name || ''}
 									inFocus={phaseData.kind === 'Pick' && phaseData.team === 'Blue' && phaseData.order === index + 1}
+									selectedChampID={roomData.selectedChamp}
 								/>
 								{index !== 0 && <Box position={'absolute'} width={'4px'} height={300} bg={'#9ca3af'} ml={'-2px'} />}
 							</Box>
@@ -40,11 +40,11 @@ const PickList = ({ champs }: Props) => {
 						{roomData.teams.Red.players.map((player, index) => (
 							<Box display={'flex'} key={`Red-Pick-${index}-${player.name}`}>
 								<Player
-									name={player.name}
 									team="Red"
 									champID={player.champ}
 									champName={champs.find((c) => c.id === player.champ)?.name || ''}
 									inFocus={phaseData.kind === 'Pick' && phaseData.team === 'Red' && phaseData.order === index + 1}
+									selectedChampID={roomData.selectedChamp}
 								/>
 								{index !== 0 && <Box position={'absolute'} width={'4px'} height={300} bg={'#9ca3af'} ml={'-2px'} />}
 							</Box>
@@ -64,6 +64,7 @@ const PickList = ({ champs }: Props) => {
 									champID={ban}
 									champName={champs.find((c) => c.id === ban)?.name || ''}
 									inFocus={phaseData.kind === 'Ban' && phaseData.team === 'Blue' && phaseData.order === index + 1}
+									selectedChampID={roomData.selectedChamp}
 								/>
 								{index !== 0 && <Box position={'absolute'} width={'4px'} height={200} bg={'#9ca3af'} ml={'-2px'} />}
 							</Box>
@@ -80,6 +81,7 @@ const PickList = ({ champs }: Props) => {
 									champID={ban}
 									champName={champs.find((c) => c.id === ban)?.name || ''}
 									inFocus={phaseData.kind === 'Ban' && phaseData.team === 'Red' && phaseData.order === index + 1}
+									selectedChampID={roomData.selectedChamp}
 								/>
 								{index !== 0 && <Box position={'absolute'} width={'4px'} height={200} bg={'#9ca3af'} ml={'-2px'} />}
 							</Box>

@@ -84,7 +84,15 @@ const Match = async ({
 	const team = rawTeam !== 'Blue' && rawTeam !== 'Red' ? 'Spec' : (rawTeam as Team);
 	const champs = await fetchAllChamps();
 	const roomID = (await params).match;
-	return <>{team === 'Spec' ? <SpecDraft /> : <Draft roomID={roomID} champs={champs} team={team} />}</>;
+	return (
+		<>
+			{team === 'Spec' ? (
+				<SpecDraft roomID={roomID} champs={champs} />
+			) : (
+				<Draft roomID={roomID} champs={champs} team={team} />
+			)}
+		</>
+	);
 };
 
 export default Match;

@@ -27,22 +27,24 @@ const DraftScreen = ({ sendMessage, champs }: Props) => {
 			<>
 				<Box width={'100%'} display={'flex'} flexDirection={'column'} justify={'center'} alignItems={'center'}>
 					<WaitingList />
-					<BlueButton
-						onClick={() => {
-							const payload: ReadyMessage = {
-								command: 'Ready',
-								isReady: true,
-								roomID: roomData.id,
-								team: myData.team,
-							};
-							sendMessage(JSON.stringify(payload));
-							setReady(true);
-						}}
-						disabled={ready}
-						props={{ fontSize: '30px', p: '15px' }}
-					>
-						{ready ? 'Waiting for another team...' : 'Ready'}
-					</BlueButton>
+					{!myData.isSpec && (
+						<BlueButton
+							onClick={() => {
+								const payload: ReadyMessage = {
+									command: 'Ready',
+									isReady: true,
+									roomID: roomData.id,
+									team: myData.team,
+								};
+								sendMessage(JSON.stringify(payload));
+								setReady(true);
+							}}
+							disabled={ready}
+							props={{ fontSize: '30px', p: '15px' }}
+						>
+							{ready ? 'Waiting for another team...' : 'Ready'}
+						</BlueButton>
+					)}
 				</Box>
 				{roomData.starting && (
 					<>

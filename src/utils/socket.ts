@@ -10,7 +10,7 @@ const useWebSocket = () => {
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
-		const url = 'http://localhost:443';
+		const url = process.env.NEXT_PUBLIC_WEBSOCKET_HOST || '';
 		const socket = new WebSocket(url);
 		setWs(socket);
 

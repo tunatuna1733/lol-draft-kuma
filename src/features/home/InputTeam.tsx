@@ -4,10 +4,11 @@ import { useState } from 'react';
 import { Box } from '@kuma-ui/core';
 import TextInput from '@/components/TextInput';
 import BlueButton from '@/components/BlueButton';
+import CopyButton from '@/components/CopyButton';
 
 const sendCreateRoomRequest = async (matchName: string, team1Name: string, team2Name: string) => {
 	const res = await fetch(
-		`http://localhost:443/createRoom?matchName=${matchName}&team1Name=${team1Name}&team2Name=${team2Name}`,
+		`${process.env.NEXT_PUBLIC_WEBSOCKET_HOST || ''}/createRoom?matchName=${matchName}&team1Name=${team1Name}&team2Name=${team2Name}`,
 	);
 	const resJson: { id: string } = await res.json();
 	return resJson.id;
@@ -59,21 +60,35 @@ const InputTeam = () => {
 	}
 
 	return (
-		<Box width="60%" display={'flex'} flexDirection={'column'} gap={10}>
-			<TextInput
-				id="team1-name"
-				label={team1Name}
-				value={`${window.location}${matchID}?team=Blue`}
-				isReadOnly={true}
-				inputProps={{ background: '#3b82f633' }}
-			/>
-			<TextInput
-				id="team2-name"
-				label={team2Name}
-				value={`${window.location}${matchID}?team=Red`}
-				isReadOnly={true}
-				inputProps={{ background: '#ef444433' }}
-			/>
+		<Box width="60%" display={'flex'} flexDirection={'column'} gap={10} mt={'50px'}>
+			<Box display={'flex'} justify={'space-between'} alignItems={'center'}>
+				<Box display={'flex'} flexDirection={'column'} width={'90%'}>
+					<TextInput
+						id="team1-name"
+						label={team1Name}
+						value={`${window.location}${matchID}?team=Blue`}
+						isReadOnly={true}
+						inputProps={{ background: '#3b82f633' }}
+					/>
+				</Box>
+				<Box width={'50px'} height={'50px'} display={'flex'} alignItems={'center'} mt={'20px'}>
+					<CopyButton text={`${window.location}${matchID}?team=Blue`} />
+				</Box>
+			</Box>
+			<Box display={'flex'} justify={'space-between'} alignItems={'center'} mt={'50px'}>
+				<Box display={'flex'} flexDirection={'column'} width={'90%'}>
+					<TextInput
+						id="team2-name"
+						label={team2Name}
+						value={`${window.location}${matchID}?team=Red`}
+						isReadOnly={true}
+						inputProps={{ background: '#ef444433' }}
+					/>
+				</Box>
+				<Box width={'50px'} height={'50px'} display={'flex'} alignItems={'center'} mt={'20px'}>
+					<CopyButton text={`${window.location}${matchID}?team=Red`} />
+				</Box>
+			</Box>
 		</Box>
 	);
 };
