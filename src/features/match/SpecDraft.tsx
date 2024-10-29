@@ -75,6 +75,7 @@ const SpecDraft = ({ roomID, champs }: Props) => {
 				currentKind={phaseData.kind}
 				currentTime={Math.trunc(timer)}
 				started={roomData.started}
+				ended={roomData.ended}
 				sendMessage={sendMessage}
 			/>
 			<DraftScreen sendMessage={sendMessage} champs={champs} />
