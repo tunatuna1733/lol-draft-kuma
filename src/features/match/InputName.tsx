@@ -4,7 +4,7 @@ import { useMyData } from '@/stores/MyData';
 import type { Team } from '@/types/lol';
 import type { JoinMessage } from '@/types/socket';
 import { Box, Text } from '@kuma-ui/core';
-import { useState, type Dispatch, type SetStateAction } from 'react';
+import { type Dispatch, type SetStateAction, useState } from 'react';
 
 type Props = {
 	team: Team;

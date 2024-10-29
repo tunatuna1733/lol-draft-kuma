@@ -1,4 +1,4 @@
-import type { Team, Lane } from '@/types/lol';
+import type { Lane, Team } from '@/types/lol';
 
 type Commands =
 	| 'Join'

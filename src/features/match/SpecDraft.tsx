@@ -7,8 +7,8 @@ import type { ChampInfo } from '@/types/lol';
 import type { JoinMessage } from '@/types/socket';
 import useWebSocket from '@/utils/socket';
 import { useCallback, useEffect, useState } from 'react';
-import Header from './Header';
 import DraftScreen from './DraftScreen';
+import Header from './Header';
 
 type Props = {
 	roomID: string;

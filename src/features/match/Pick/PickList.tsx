@@ -1,9 +1,9 @@
 import { usePhaseData } from '@/stores/PhaseData';
 import { useRoomDataStore } from '@/stores/RoomData';
-import Player from './Player';
-import Ban from './Ban';
 import type { ChampInfo } from '@/types/lol';
 import { Box, Text } from '@kuma-ui/core';
+import Ban from './Ban';
+import Player from './Player';
 import PlayerList from './PlayerList';
 
 type Props = {
@@ -26,8 +26,14 @@ const PickList = ({ champs }: Props) => {
 									team="Blue"
 									champID={player.champ}
 									champName={champs.find((c) => c.id === player.champ)?.name || ''}
-									inFocus={phaseData.kind === 'Pick' && phaseData.team === 'Blue' && phaseData.order === index + 1}
+									inFocus={
+										phaseData.kind === 'Pick' &&
+										phaseData.team === 'Blue' &&
+										phaseData.order === index + 1 &&
+										!roomData.ended
+									}
 									selectedChampID={roomData.selectedChamp}
+									selectedChampName={champs.find((c) => c.id === roomData.selectedChamp)?.name || ''}
 								/>
 								{index !== 0 && <Box position={'absolute'} width={'4px'} height={300} bg={'#9ca3af'} ml={'-2px'} />}
 							</Box>
@@ -43,8 +49,14 @@ const PickList = ({ champs }: Props) => {
 									team="Red"
 									champID={player.champ}
 									champName={champs.find((c) => c.id === player.champ)?.name || ''}
-									inFocus={phaseData.kind === 'Pick' && phaseData.team === 'Red' && phaseData.order === index + 1}
+									inFocus={
+										phaseData.kind === 'Pick' &&
+										phaseData.team === 'Red' &&
+										phaseData.order === index + 1 &&
+										!roomData.ended
+									}
 									selectedChampID={roomData.selectedChamp}
+									selectedChampName={champs.find((c) => c.id === roomData.selectedChamp)?.name || ''}
 								/>
 								{index !== 0 && <Box position={'absolute'} width={'4px'} height={300} bg={'#9ca3af'} ml={'-2px'} />}
 							</Box>
@@ -63,8 +75,14 @@ const PickList = ({ champs }: Props) => {
 									team="Blue"
 									champID={ban}
 									champName={champs.find((c) => c.id === ban)?.name || ''}
-									inFocus={phaseData.kind === 'Ban' && phaseData.team === 'Blue' && phaseData.order === index + 1}
+									inFocus={
+										phaseData.kind === 'Ban' &&
+										phaseData.team === 'Blue' &&
+										phaseData.order === index + 1 &&
+										!roomData.ended
+									}
 									selectedChampID={roomData.selectedChamp}
+									selectedChampName={champs.find((c) => c.id === roomData.selectedChamp)?.name || ''}
 								/>
 								{index !== 0 && <Box position={'absolute'} width={'4px'} height={200} bg={'#9ca3af'} ml={'-2px'} />}
 							</Box>
@@ -80,8 +98,14 @@ const PickList = ({ champs }: Props) => {
 									team="Red"
 									champID={ban}
 									champName={champs.find((c) => c.id === ban)?.name || ''}
-									inFocus={phaseData.kind === 'Ban' && phaseData.team === 'Red' && phaseData.order === index + 1}
+									inFocus={
+										phaseData.kind === 'Ban' &&
+										phaseData.team === 'Red' &&
+										phaseData.order === index + 1 &&
+										!roomData.ended
+									}
 									selectedChampID={roomData.selectedChamp}
+									selectedChampName={champs.find((c) => c.id === roomData.selectedChamp)?.name || ''}
 								/>
 								{index !== 0 && <Box position={'absolute'} width={'4px'} height={200} bg={'#9ca3af'} ml={'-2px'} />}
 							</Box>

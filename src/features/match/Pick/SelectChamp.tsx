@@ -1,7 +1,7 @@
 import type { ChampInfo } from '@/types/lol';
 import { Box, Button, Text } from '@kuma-ui/core';
 import Image from 'next/image';
-import { memo, type MouseEventHandler } from 'react';
+import { type MouseEventHandler, memo } from 'react';
 
 type Props = {
 	info: ChampInfo;

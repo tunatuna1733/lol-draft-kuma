@@ -11,7 +11,8 @@
   },
   "formatter": {
     "enabled": true,
-    "indentStyle": "tab"
+    "indentStyle": "tab",
+    "lineEnding": "crlf"
   },
   "organizeImports": {
     "enabled": true
@@ -27,6 +28,11 @@
       "quoteStyle": "single",
       "lineWidth": 120,
       "semicolons": "always"
+    }
+  },
+  "css": {
+    "formatter": {
+      "indentStyle": "space"
     }
   }
 }

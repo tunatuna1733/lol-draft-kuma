@@ -9,9 +9,10 @@ type Props = {
 	champName: string;
 	inFocus: boolean;
 	selectedChampID: string;
+	selectedChampName: string;
 };
 
-const Player = ({ team, champID, champName, inFocus, selectedChampID }: Props) => {
+const Player = ({ team, champID, champName, inFocus, selectedChampID, selectedChampName }: Props) => {
 	const height = 300;
 	const width = 165;
 	const url = `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champID}_0.jpg`;
@@ -19,8 +20,13 @@ const Player = ({ team, champID, champName, inFocus, selectedChampID }: Props) =
 
 	return (
 		<>
-			<style>{'@keyframes fadeinout { 0%{ opacity: 0.2;} 100%{ opacity: 0.6;} }'}</style>
-			<Box height={height} width={width} position={'relative'} id={`player-pick-${champID}`}>
+			<style>{'@keyframes fadeinout { 0%{ opacity: 0.1;} 100%{ opacity: 0.5;} }'}</style>
+			<Box
+				height={height}
+				width={width}
+				position={'relative'}
+				id={inFocus ? `player-picking-${selectedChampID}` : `player-pick-${champID}`}
+			>
 				{champID !== '' ? (
 					<Image
 						fill={true}
@@ -85,7 +91,12 @@ const Player = ({ team, champID, champName, inFocus, selectedChampID }: Props) =
 				/>
         */}
 			</Box>
-			<Tooltip anchorSelect={`#player-pick-${champID}`} place="bottom" content={champName} style={{ zIndex: 200 }} />
+			<Tooltip
+				anchorSelect={inFocus ? `#player-picking-${selectedChampID}` : `#player-pick-${champID}`}
+				place="bottom"
+				content={inFocus ? selectedChampName : champName}
+				style={{ zIndex: 200 }}
+			/>
 		</>
 	);
 };

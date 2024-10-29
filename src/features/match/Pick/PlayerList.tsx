@@ -29,16 +29,18 @@ const PlayerList = ({ team }: Props) => {
 
 	return (
 		<Box display={'flex'} flexDirection={'column'} height={'200px'} justify={'space-between'} ml={'20px'}>
-			{players.map((player) => (
-				<Box key={`${player.team}-${player.name}`} display={'flex'} alignItems={'center'}>
-					<Box width={'30px'} height={'30px'}>
-						{getLaneIcon(player.lane)}
+			{players
+				.filter((player) => !player.isNPC)
+				.map((player) => (
+					<Box key={`${player.team}-${player.name}`} display={'flex'} alignItems={'center'}>
+						<Box width={'30px'} height={'30px'}>
+							{getLaneIcon(player.lane)}
+						</Box>
+						<Text ml={'5px'} my={0} color={'white'} fontSize={20}>
+							{player.name}
+						</Text>
 					</Box>
-					<Text ml={'5px'} my={0} color={'white'} fontSize={20}>
-						{player.name}
-					</Text>
-				</Box>
-			))}
+				))}
 		</Box>
 	);
 };

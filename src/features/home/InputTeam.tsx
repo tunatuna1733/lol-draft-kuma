@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
-import { Box } from '@kuma-ui/core';
-import TextInput from '@/components/TextInput';
 import BlueButton from '@/components/BlueButton';
 import CopyButton from '@/components/CopyButton';
+import TextInput from '@/components/TextInput';
+import { Box } from '@kuma-ui/core';
+import { useState } from 'react';
 
 const sendCreateRoomRequest = async (matchName: string, team1Name: string, team2Name: string) => {
 	const res = await fetch(

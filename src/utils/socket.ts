@@ -1,6 +1,6 @@
+import { useMyData } from '@/stores/MyData';
 import { usePhaseData } from '@/stores/PhaseData';
 import { useRoomDataStore } from '@/stores/RoomData';
-import { useMyData } from '@/stores/MyData';
 import type { CurrentPhase, MakeSpec, ResultMessage, RoomData, StartPhase } from '@/types/room';
 import { useEffect, useState } from 'react';
 
@@ -25,6 +25,7 @@ const useWebSocket = () => {
 				} else usePhaseData.setState(data);
 			} else {
 				useRoomDataStore.setState(data);
+				if (data.ended) setSpec(true);
 			}
 		};
 	}, []);

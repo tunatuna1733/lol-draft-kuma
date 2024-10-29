@@ -1,5 +1,5 @@
 import type { Team } from '@/types/lol';
-import { Box, css, Text } from '@kuma-ui/core';
+import { Box, Text } from '@kuma-ui/core';
 
 type Props = {
 	name?: string;

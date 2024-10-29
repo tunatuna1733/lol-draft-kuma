@@ -4,12 +4,12 @@ import { usePhaseData } from '@/stores/PhaseData';
 import { useRoomDataStore } from '@/stores/RoomData';
 import type { ChampInfo, Team } from '@/types/lol';
 import useWebSocket from '@/utils/socket';
-import { useEffect, useState } from 'react';
-import InputName from './InputName';
 import { Box } from '@kuma-ui/core';
-import Header from './Header';
+import { useEffect, useState } from 'react';
+import { clearInterval, setInterval } from 'worker-timers';
 import DraftScreen from './DraftScreen';
-import { setInterval, clearInterval } from 'worker-timers';
+import Header from './Header';
+import InputName from './InputName';
 
 type Props = { roomID: string; team: Team; champs: ChampInfo[] };
 
@@ -67,6 +67,7 @@ const Draft = ({ roomID, team, champs }: Props) => {
 					currentKind={phaseData.kind}
 					currentTime={Math.trunc(timer)}
 					started={roomData.started}
+					ended={roomData.ended}
 					sendMessage={sendMessage}
 				/>
 				<DraftScreen sendMessage={sendMessage} champs={champs} />

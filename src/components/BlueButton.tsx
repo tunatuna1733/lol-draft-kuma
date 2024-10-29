@@ -1,4 +1,4 @@
-import { type ButtonProps, Button } from '@kuma-ui/core';
+import { Button, type ButtonProps } from '@kuma-ui/core';
 import type { MouseEventHandler, ReactNode } from 'react';
 
 type Props = {

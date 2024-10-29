@@ -9,10 +9,20 @@ type Props = {
 	currentKind?: 'Ban' | 'Pick';
 	currentTime: number;
 	started: boolean;
+	ended: boolean;
 	sendMessage: (message: string) => Promise<void>;
 };
 
-const Header = ({ team1Name, team2Name, currentTeam, currentKind, currentTime, started, sendMessage }: Props) => {
+const Header = ({
+	team1Name,
+	team2Name,
+	currentTeam,
+	currentKind,
+	currentTime,
+	started,
+	ended,
+	sendMessage,
+}: Props) => {
 	return (
 		<Box
 			display={'grid'}
@@ -41,7 +51,7 @@ const Header = ({ team1Name, team2Name, currentTeam, currentKind, currentTime, s
 					</Box>
 					<Box width={'40%'} display={'flex'} justify={'right'} alignItems={'center'}>
 						<Text color={'white'} fontSize={60} my={'auto'} fontFamily={'Arial'} mr={'50px'}>
-							{started && currentTeam === 'Blue' ? `${currentKind} ${currentTime}s` : ''}
+							{started && !ended && currentTeam === 'Blue' ? `${currentKind} ${currentTime}s` : ''}
 						</Text>
 					</Box>
 				</Box>
@@ -60,13 +70,13 @@ const Header = ({ team1Name, team2Name, currentTeam, currentKind, currentTime, s
 				)}
 			</Box>
 			<Box width={'100%'} height={'100px'}>
-				{started && <ToggleButton sendMessage={sendMessage} />}
+				{started && !ended && <ToggleButton sendMessage={sendMessage} />}
 			</Box>
 			<Box width={'100%'}>
 				<Box display={'flex'} width={'100%'} height={'90px'}>
 					<Box width={'40%'} display={'flex'} alignItems={'center'}>
 						<Text color={'white'} fontSize={60} my={'auto'} fontFamily={'Arial'} ml={'50px'}>
-							{started && currentTeam === 'Red' ? `${currentKind} ${currentTime}s` : ''}
+							{started && !ended && currentTeam === 'Red' ? `${currentKind} ${currentTime}s` : ''}
 						</Text>
 					</Box>
 					<Box width={'60%'} display={'flex'} justify={'right'} alignItems={'center'}>

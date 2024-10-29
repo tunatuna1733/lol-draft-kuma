@@ -9,9 +9,10 @@ type Props = {
 	champName: string;
 	inFocus: boolean;
 	selectedChampID: string;
+	selectedChampName: string;
 };
 
-const Ban = ({ team, champID, champName, inFocus, selectedChampID }: Props) => {
+const Ban = ({ team, champID, champName, inFocus, selectedChampID, selectedChampName }: Props) => {
 	const height = 200;
 	const width = 110;
 	const url = `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champID}_0.jpg`;
@@ -19,8 +20,13 @@ const Ban = ({ team, champID, champName, inFocus, selectedChampID }: Props) => {
 
 	return (
 		<>
-			<style>{'@keyframes fadeinout { 0%{ opacity: 0.2;} 100%{ opacity: 0.6;} }'}</style>
-			<Box height={height} width={width} position={'relative'} id={`player-ban-${champID}`}>
+			<style>{'@keyframes fadeinout { 0%{ opacity: 0.1;} 100%{ opacity: 0.4;} }'}</style>
+			<Box
+				height={height}
+				width={width}
+				position={'relative'}
+				id={inFocus ? `player-banning-${selectedChampID}` : `player-ban-${champID}`}
+			>
 				{champID !== '' && (
 					<Image
 						fill={true}
@@ -85,7 +91,12 @@ const Ban = ({ team, champID, champName, inFocus, selectedChampID }: Props) => {
 					/>
 				)}
 			</Box>
-			<Tooltip anchorSelect={`#player-ban-${champID}`} place="bottom" content={champName} style={{ zIndex: 200 }} />
+			<Tooltip
+				anchorSelect={inFocus ? `#player-banning-${selectedChampID}` : `#player-ban-${champID}`}
+				place="bottom"
+				content={inFocus ? selectedChampName : champName}
+				style={{ zIndex: 200 }}
+			/>
 		</>
 	);
 };

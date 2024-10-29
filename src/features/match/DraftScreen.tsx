@@ -5,8 +5,8 @@ import type { ChampInfo } from '@/types/lol';
 import type { ReadyMessage } from '@/types/socket';
 import { Box, Text } from '@kuma-ui/core';
 import { useState } from 'react';
-import WaitingList from './Waiting/WaitingList';
 import PickScreen from './Pick/PickScreen';
+import WaitingList from './Waiting/WaitingList';
 
 type Props = {
 	sendMessage: (message: string) => Promise<void>;

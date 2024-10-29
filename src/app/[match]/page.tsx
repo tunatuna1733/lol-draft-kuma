@@ -1,6 +1,6 @@
 import Draft from '@/features/match/Draft';
 import SpecDraft from '@/features/match/SpecDraft';
-import type { Lane, ChampsResponse, ChampInfo, Team } from '@/types/lol';
+import type { ChampInfo, ChampsResponse, Lane, Team } from '@/types/lol';
 
 type rawLaneInfo = {
 	SUPPORT: { [key: string]: number };
