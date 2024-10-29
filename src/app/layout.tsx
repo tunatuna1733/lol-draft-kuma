@@ -2,6 +2,7 @@ import { KumaRegistry } from '@kuma-ui/next-plugin/registry';
 import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 export const metadata: Metadata = {
 	title: 'Create Next App',
@@ -17,6 +18,7 @@ export default function RootLayout({
 		<html lang="en">
 			<body>
 				<Analytics />
+				<SpeedInsights />
 				<KumaRegistry>{children}</KumaRegistry>
 			</body>
 		</html>
