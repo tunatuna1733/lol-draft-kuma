@@ -55,7 +55,7 @@ const Header = ({
 						</Text>
 					</Box>
 				</Box>
-				{started && currentTeam === 'Blue' ? (
+				{started && !ended && currentTeam === 'Blue' ? (
 					<Box width={'100%'} height={'10px'} position={'relative'} overflow={'hidden'} transform={'scaleX(-1)'}>
 						<Box
 							height={'100%'}
@@ -92,7 +92,7 @@ const Header = ({
 						</Text>
 					</Box>
 				</Box>
-				{started && currentTeam === 'Red' ? (
+				{started && !ended && currentTeam === 'Red' ? (
 					<Box width={'100%'} height={'10px'} position={'relative'} overflow={'hidden'}>
 						<Box
 							height={'100%'}
