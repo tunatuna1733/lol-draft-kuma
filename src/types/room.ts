@@ -13,6 +13,7 @@ export interface PhaseData {
 	team: Team;
 	order: number;
 	eta: number;
+	remainingTime: number;
 	paused: boolean;
 }
 

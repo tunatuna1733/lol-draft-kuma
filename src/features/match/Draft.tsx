@@ -24,7 +24,7 @@ const Draft = ({ roomID, team, champs }: Props) => {
 	useEffect(() => {
 		if (!phaseData.paused) {
 			if (phaseData.eta !== 0) {
-				setTimer((phaseData.eta - Date.now()) / 1000);
+				setTimer(phaseData.remainingTime / 1000);
 			} else {
 				setTimer(30);
 			}
