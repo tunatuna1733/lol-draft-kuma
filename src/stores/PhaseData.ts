@@ -6,5 +6,6 @@ export const usePhaseData = create<PhaseData>()((set) => ({
 	team: 'Blue',
 	order: 1,
 	eta: 0,
+	remainingTime: 0,
 	paused: false,
 }));
