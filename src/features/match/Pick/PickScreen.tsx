@@ -197,7 +197,7 @@ const PickScreen = ({ sendMessage, champs }: Props) => {
 								info={champ}
 								selected={selectedChampID === champ.id}
 								onClick={() => handleChampSelect(champ.id)}
-								disabled={phaseData.team !== team}
+								disabled={phaseData.team !== team || phaseData.paused}
 								banned={bans.includes(champ.id)}
 							/>
 						</Box>
@@ -206,7 +206,7 @@ const PickScreen = ({ sendMessage, champs }: Props) => {
 			</Box>
 			<BlueButton
 				onClick={() => handleChampPick(selectedChampID || '')}
-				disabled={!selectedChampID || phaseData.team !== team}
+				disabled={!selectedChampID || phaseData.team !== team || phaseData.paused}
 				props={{
 					top: '85%',
 					left: '85%',

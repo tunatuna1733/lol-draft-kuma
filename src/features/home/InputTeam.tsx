@@ -89,6 +89,20 @@ const InputTeam = () => {
 					<CopyButton text={`${window.location}${matchID}?team=Red`} />
 				</Box>
 			</Box>
+			<Box display={'flex'} justify={'space-between'} alignItems={'center'} mt={'50px'}>
+				<Box display={'flex'} flexDirection={'column'} width={'90%'}>
+					<TextInput
+						id="spectator"
+						label={'Spectator'}
+						value={`${window.location}${matchID}`}
+						isReadOnly={true}
+						inputProps={{ background: '#37415133' }}
+					/>
+				</Box>
+				<Box width={'50px'} height={'50px'} display={'flex'} alignItems={'center'} mt={'20px'}>
+					<CopyButton text={`${window.location}${matchID}`} />
+				</Box>
+			</Box>
 		</Box>
 	);
 };
