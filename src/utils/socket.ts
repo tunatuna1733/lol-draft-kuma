@@ -34,7 +34,19 @@ const useWebSocket = () => {
 		if (ws) ws.send(message);
 	};
 
-	return { sendMessage };
+	const waitForConnect = (callback: () => void) => {
+		setTimeout(() => {
+			if (!ws) {
+				waitForConnect(callback);
+				return;
+			}
+			if (ws.readyState === 1) {
+				if (callback) callback();
+			} else waitForConnect(callback);
+		}, 10);
+	};
+
+	return { sendMessage, waitForConnect };
 };
 
 export default useWebSocket;

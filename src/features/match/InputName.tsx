@@ -1,8 +1,10 @@
 import BlueButton from '@/components/BlueButton';
 import TextInput from '@/components/TextInput';
 import { useMyData } from '@/stores/MyData';
+import { useMyName } from '@/stores/MyName';
 import type { Team } from '@/types/lol';
 import type { JoinMessage } from '@/types/socket';
+import useStore from '@/utils/store';
 import { Box, Text } from '@kuma-ui/core';
 import { type Dispatch, type SetStateAction, useState } from 'react';
 
@@ -14,24 +16,25 @@ type Props = {
 };
 
 const InputName = ({ team, roomID, sendMessage, setSubmit }: Props) => {
-	const [inputName, setInputName] = useState('');
 	const { setName, setTeam } = useMyData((state) => state);
+	const myNameStore = useStore(useMyName, (state) => state);
 	const [toastOpen, setToastOpen] = useState(false);
 
 	const handleSubmit = () => {
-		if (inputName === '') {
+		if (!myNameStore) return;
+		if (myNameStore.myName === '') {
 			handleOpenToast();
 			return;
 		}
 		const payload: JoinMessage = {
 			command: 'Join',
-			name: inputName,
+			name: myNameStore.myName,
 			team,
 			roomID,
 		};
 		sendMessage(JSON.stringify(payload));
 
-		setName(inputName);
+		setName(myNameStore.myName);
 		setTeam(team);
 		// save persistent name here
 		setSubmit(true);
@@ -60,17 +63,21 @@ const InputName = ({ team, roomID, sendMessage, setSubmit }: Props) => {
 				gap={3}
 				mt={'10%'}
 			>
-				<TextInput
-					id="name-input"
-					label="名前を入力してください"
-					value={inputName}
-					setValue={setInputName}
-					placeholder="Name"
-					inputProps={{ borderColor: team === 'Red' ? '#991b1b' : '#1e40af', mt: '5px' }}
-				/>
-				<Box display={'flex'} justify={'center'} mt={'10px'}>
-					<BlueButton onClick={handleSubmit}>Submit</BlueButton>
-				</Box>
+				{myNameStore && (
+					<>
+						<TextInput
+							id="name-input"
+							label="名前を入力してください"
+							value={myNameStore.myName}
+							setValue={myNameStore.setMyName}
+							placeholder="Name"
+							inputProps={{ borderColor: team === 'Red' ? '#991b1b' : '#1e40af', mt: '5px' }}
+						/>
+						<Box display={'flex'} justify={'center'} mt={'10px'}>
+							<BlueButton onClick={handleSubmit}>Submit</BlueButton>
+						</Box>
+					</>
+				)}
 			</Box>
 			{toastOpen && (
 				<Box

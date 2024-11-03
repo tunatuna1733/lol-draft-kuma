@@ -5,8 +5,8 @@ type Props = {
 	id: string;
 	label: string;
 	placeholder?: string;
-	value: string;
-	setValue?: Dispatch<SetStateAction<string>>;
+	value?: string;
+	setValue?: Dispatch<SetStateAction<string>> | ((text: string) => void);
 	isReadOnly?: boolean;
 	labelProps?: DetailedHTMLProps<LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement>;
 	inputProps?: InputProps;
@@ -29,7 +29,7 @@ const TextInput = ({ id, label, placeholder, value, setValue, labelProps, inputP
 			<Input
 				id={id}
 				placeholder={placeholder}
-				value={value}
+				value={value || ''}
 				onChange={
 					setValue &&
 					((e: ChangeEvent<HTMLInputElement>) => {

@@ -1,6 +1,5 @@
 'use client';
 
-import BlueButton from '@/components/BlueButton';
 import { usePhaseData } from '@/stores/PhaseData';
 import { useRoomDataStore } from '@/stores/RoomData';
 import type { ChampInfo } from '@/types/lol';
@@ -20,7 +19,7 @@ const SpecDraft = ({ roomID, champs }: Props) => {
 	const [timer, setTimer] = useState(0);
 	const roomData = useRoomDataStore((state) => state);
 	const phaseData = usePhaseData((state) => state);
-	const { sendMessage } = useWebSocket();
+	const { sendMessage, waitForConnect } = useWebSocket();
 
 	useEffect(() => {
 		if (!phaseData.paused) {
@@ -50,20 +49,21 @@ const SpecDraft = ({ roomID, champs }: Props) => {
 		}
 	}, [roomData]);
 
-	const handleSubmit = useCallback(() => {
-		const payload: JoinMessage = {
-			command: 'Join',
-			name: '',
-			team: 'Blue',
-			isSpec: true,
-			roomID,
-		};
-		sendMessage(JSON.stringify(payload));
-		setSubmit(true);
-	}, [sendMessage, roomID]);
-
-	if (!submit) {
-		return <BlueButton onClick={handleSubmit}>Join as Spec</BlueButton>;
+	if (typeof window !== 'undefined') {
+		if (roomID && !submit) {
+			console.log('Sending spec req');
+			waitForConnect(() => {
+				const payload: JoinMessage = {
+					command: 'Join',
+					name: '',
+					team: 'Blue',
+					isSpec: true,
+					roomID,
+				};
+				sendMessage(JSON.stringify(payload));
+				setSubmit(true);
+			});
+		}
 	}
 
 	return (
