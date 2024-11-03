@@ -3,7 +3,7 @@ import { Box, Text } from '@kuma-ui/core';
 import WaitingPlayer from './WaitingPlayer';
 
 const WaitingList = () => {
-	const roomData = useRoomDataStore((state) => state);
+	const teams = useRoomDataStore((state) => state.teams);
 	const playerIndex = [0, 1, 2, 3, 4];
 
 	return (
@@ -11,7 +11,7 @@ const WaitingList = () => {
 			<Box height={'300px'} display={'flex'} flexDirection={'row'} justify={'center'} alignItems={'center'}>
 				<Box display={'flex'} height={'100%'}>
 					{playerIndex.map((index) => (
-						<WaitingPlayer name={roomData.teams.Blue.players[index]?.name} team="Blue" key={`Blue-${index}`} />
+						<WaitingPlayer name={teams.Blue.players[index]?.name} team="Blue" key={`Blue-${index}`} />
 					))}
 				</Box>
 				<Box height={'100%'} width={'100px'}>
@@ -19,7 +19,7 @@ const WaitingList = () => {
 				</Box>
 				<Box display={'flex'} height={'100%'}>
 					{playerIndex.map((index) => (
-						<WaitingPlayer name={roomData.teams.Red.players[index]?.name} team="Red" key={`Red-${index}`} />
+						<WaitingPlayer name={teams.Red.players[index]?.name} team="Red" key={`Red-${index}`} />
 					))}
 				</Box>
 			</Box>

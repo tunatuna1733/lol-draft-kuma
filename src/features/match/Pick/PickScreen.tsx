@@ -237,7 +237,7 @@ const PickScreen = ({ sendMessage, champs }: Props) => {
 					<option value={'Jungle'}>Jungle</option>
 					<option value={'Mid'}>Mid</option>
 					<option value={'Bot'}>Bot</option>
-					<option value={'Support'}>Top</option>
+					<option value={'Support'}>Support</option>
 				</Select>
 			</Box>
 		</>
