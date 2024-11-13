@@ -4,7 +4,7 @@ import { useRoomDataStore } from '@/stores/RoomData';
 import type { CurrentPhase, MakeSpec, ResultMessage, RoomData, StartPhase } from '@/types/room';
 import { useEffect, useState } from 'react';
 
-const useWebSocket = () => {
+const useDraftSocket = () => {
 	const [ws, setWs] = useState<WebSocket>();
 	const setSpec = useMyData((state) => state.setSpec);
 
@@ -49,4 +49,4 @@ const useWebSocket = () => {
 	return { sendMessage, waitForConnect };
 };
 
-export default useWebSocket;
+export default useDraftSocket;

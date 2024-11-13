@@ -6,6 +6,7 @@ export interface PlayerData {
 	lane: Lane | '';
 	champ: string;
 	isNPC: boolean;
+	isBeginner: boolean;
 }
 
 export interface PhaseData {

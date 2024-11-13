@@ -4,7 +4,7 @@ import { usePhaseData } from '@/stores/PhaseData';
 import { useRoomDataStore } from '@/stores/RoomData';
 import type { ChampInfo } from '@/types/lol';
 import type { JoinMessage } from '@/types/socket';
-import useWebSocket from '@/utils/socket';
+import useDraftSocket from '@/utils/DraftSocket';
 import { useCallback, useEffect, useState } from 'react';
 import DraftScreen from './DraftScreen';
 import Header from './Header';
@@ -19,7 +19,7 @@ const SpecDraft = ({ roomID, champs }: Props) => {
 	const [timer, setTimer] = useState(0);
 	const roomData = useRoomDataStore((state) => state);
 	const phaseData = usePhaseData((state) => state);
-	const { sendMessage, waitForConnect } = useWebSocket();
+	const { sendMessage, waitForConnect } = useDraftSocket();
 
 	useEffect(() => {
 		if (!phaseData.paused) {

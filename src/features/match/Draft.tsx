@@ -3,7 +3,7 @@
 import { usePhaseData } from '@/stores/PhaseData';
 import { useRoomDataStore } from '@/stores/RoomData';
 import type { ChampInfo, Team } from '@/types/lol';
-import useWebSocket from '@/utils/socket';
+import useDraftSocket from '@/utils/DraftSocket';
 import { Box } from '@kuma-ui/core';
 import { useEffect, useState } from 'react';
 import { clearInterval, setInterval } from 'worker-timers';
@@ -19,7 +19,7 @@ const Draft = ({ roomID, team, champs }: Props) => {
 
 	const roomData = useRoomDataStore((state) => state);
 	const phaseData = usePhaseData((state) => state);
-	const { sendMessage } = useWebSocket();
+	const { sendMessage } = useDraftSocket();
 
 	useEffect(() => {
 		if (!phaseData.paused) {

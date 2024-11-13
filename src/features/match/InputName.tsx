@@ -1,12 +1,11 @@
 import BlueButton from '@/components/BlueButton';
 import TextInput from '@/components/TextInput';
 import { useMyData } from '@/stores/MyData';
-import { useMyName } from '@/stores/MyName';
 import type { Team } from '@/types/lol';
 import type { JoinMessage } from '@/types/socket';
 import useStore from '@/utils/store';
 import { Box, Text } from '@kuma-ui/core';
-import { type Dispatch, type SetStateAction, useState } from 'react';
+import { type Dispatch, type SetStateAction, useEffect, useState } from 'react';
 
 type Props = {
 	team: Team;
@@ -17,26 +16,30 @@ type Props = {
 
 const InputName = ({ team, roomID, sendMessage, setSubmit }: Props) => {
 	const { setName, setTeam } = useMyData((state) => state);
-	const myNameStore = useStore(useMyName, (state) => state);
+	const [inputText, setInputText] = useState<string>();
 	const [toastOpen, setToastOpen] = useState(false);
 
+	useEffect(() => {
+		const savedName = localStorage.getItem('lol-draft-my-name');
+		if (savedName) setInputText(savedName);
+	}, []);
+
 	const handleSubmit = () => {
-		if (!myNameStore) return;
-		if (myNameStore.myName === '') {
+		if (!inputText || inputText === '') {
 			handleOpenToast();
 			return;
 		}
 		const payload: JoinMessage = {
 			command: 'Join',
-			name: myNameStore.myName,
+			name: inputText,
 			team,
 			roomID,
 		};
 		sendMessage(JSON.stringify(payload));
 
-		setName(myNameStore.myName);
+		setName(inputText);
 		setTeam(team);
-		// save persistent name here
+		localStorage.setItem('lol-draft-my-name', inputText);
 		setSubmit(true);
 	};
 
@@ -63,21 +66,19 @@ const InputName = ({ team, roomID, sendMessage, setSubmit }: Props) => {
 				gap={3}
 				mt={'10%'}
 			>
-				{myNameStore && (
-					<>
-						<TextInput
-							id="name-input"
-							label="名前を入力してください"
-							value={myNameStore.myName}
-							setValue={myNameStore.setMyName}
-							placeholder="Name"
-							inputProps={{ borderColor: team === 'Red' ? '#991b1b' : '#1e40af', mt: '5px' }}
-						/>
-						<Box display={'flex'} justify={'center'} mt={'10px'}>
-							<BlueButton onClick={handleSubmit}>Submit</BlueButton>
-						</Box>
-					</>
-				)}
+				<>
+					<TextInput
+						id="name-input"
+						label="名前を入力してください"
+						value={inputText}
+						setValue={setInputText}
+						placeholder="Name"
+						inputProps={{ borderColor: team === 'Red' ? '#991b1b' : '#1e40af', mt: '5px' }}
+					/>
+					<Box display={'flex'} justify={'center'} mt={'10px'}>
+						<BlueButton onClick={handleSubmit}>Submit</BlueButton>
+					</Box>
+				</>
 			</Box>
 			{toastOpen && (
 				<Box

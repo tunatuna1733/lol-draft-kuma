@@ -197,7 +197,7 @@ const PickScreen = ({ sendMessage, champs }: Props) => {
 								info={champ}
 								selected={selectedChampID === champ.id}
 								onClick={() => handleChampSelect(champ.id)}
-								disabled={phaseData.team !== team || phaseData.paused}
+								disabled={phaseData.team !== team}
 								banned={bans.includes(champ.id)}
 							/>
 						</Box>
