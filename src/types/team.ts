@@ -24,6 +24,11 @@ export interface TeamTransferPlayerMessage extends BaseMessage {
 	team: Team | 'Unassigned';
 }
 
+export interface TeamAutoAssignPlayerMessage extends BaseMessage {
+	command: 'AutoAssignPlayer';
+	name: string;
+}
+
 export interface PlayerData {
 	name: string;
 	icon: string;
