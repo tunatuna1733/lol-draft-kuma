@@ -2,25 +2,28 @@
 
 import { useTeamDataStore } from '@/stores/TeamData';
 import useTeamSocket from '@/utils/TeamSocket';
-import { Box, Button, Heading, Text } from '@kuma-ui/core';
+import { Box, Button, Heading } from '@kuma-ui/core';
 import TeamPlayer from './TeamPlayer';
-import { useCallback } from 'react';
-import type { Team } from '@/types/lol';
-import type { TeamTransferPlayerMessage } from '@/types/team';
 import SwapButton from './SwapButton';
+import { useCallback, useState } from 'react';
+import type { Lane } from '@/types/lol';
+import type { TeamAddPlayerMessage } from '@/types/team';
+import AddPlayerModal from './AddPlayerModal';
 
 type Props = {
 	teamID: string;
 };
 
 const TeamCreator = ({ teamID }: Props) => {
+	const [isModalOpen, setModalOpen] = useState(false);
+
 	const { sendMessage } = useTeamSocket(teamID);
 	const teamData = useTeamDataStore((state) => state);
 
 	return (
 		<>
-			<Box width={'70%'} display={'flex'} flexDirection={'column'} justifySelf={'center'}>
-				<Box display={'flex'} mt={'10%'} mb={'50px'}>
+			<Box width={'70%'} display={'flex'} flexDirection={'column'} justifySelf={'center'} fontFamily={'Arial'}>
+				<Box display={'flex'} mt={'3%'} mb={'50px'}>
 					<Box>
 						<Heading color={'white'}>Blue Team</Heading>
 						<Box display={'flex'}>
@@ -140,6 +143,12 @@ const TeamCreator = ({ teamID }: Props) => {
 					))}
 				</Box>
 			</Box>
+			<Button position={'fixed'} top={'80%'} left={'80%'} onClick={() => setModalOpen(true)}>
+				Add Player
+			</Button>
+			{isModalOpen && (
+				<AddPlayerModal teamID={teamID} sendMessage={sendMessage} closeModal={() => setModalOpen(false)} />
+			)}
 		</>
 	);
 };

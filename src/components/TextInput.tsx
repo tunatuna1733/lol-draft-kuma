@@ -36,7 +36,6 @@ const TextInput = ({ id, label, placeholder, value, setValue, labelProps, inputP
 						setValue(e.target.value);
 					})
 				}
-				width="100%"
 				p="10px"
 				fontSize="1.125rem"
 				lineHeight="1.75rem"

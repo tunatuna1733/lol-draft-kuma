@@ -84,7 +84,6 @@ const TeamPlayer = ({ player, teamID, sendMessage, listed }: Props) => {
 						}}
 						borderRadius={'10px'}
 						p={'5px'}
-						mt={'5px'}
 						fontSize={'16px'}
 						width={'100px'}
 					>
