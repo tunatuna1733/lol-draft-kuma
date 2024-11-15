@@ -65,10 +65,17 @@ const TeamPlayer = ({ player, teamID, sendMessage, listed }: Props) => {
 			mb={'10px'}
 		>
 			<Box display={'flex'} flexDirection={'row'} alignItems={'center'}>
-				<Box display={'flex'} alignItems={'center'} justifyContent={'center'} width={'50px'} height={'50px'}>
+				<Box
+					display={'flex'}
+					alignItems={'center'}
+					justifyContent={'center'}
+					width={'50px'}
+					height={'50px'}
+					borderRadius={'50%'}
+				>
 					{player.icon && <img src={player.icon} alt={`${player.name} icon`} width={'100%'} height={'100%'} />}
 				</Box>
-				<Box display={'flex'} alignItems={'center'} justifyContent={'center'} height={'50px'}>
+				<Box display={'flex'} alignItems={'center'} justifyContent={'center'} height={'50px'} pl={'10px'}>
 					<Text color={'white'}>{player.name}</Text>
 				</Box>
 			</Box>
