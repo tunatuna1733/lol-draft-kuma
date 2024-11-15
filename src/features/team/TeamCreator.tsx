@@ -2,13 +2,12 @@
 
 import { useTeamDataStore } from '@/stores/TeamData';
 import useTeamSocket from '@/utils/TeamSocket';
-import { Box, Button, Heading } from '@kuma-ui/core';
+import { Box, Heading } from '@kuma-ui/core';
 import TeamPlayer from './TeamPlayer';
 import SwapButton from './SwapButton';
-import { useCallback, useState } from 'react';
-import type { Lane } from '@/types/lol';
-import type { TeamAddPlayerMessage } from '@/types/team';
+import { useState } from 'react';
 import AddPlayerModal from './AddPlayerModal';
+import BlueButton from '@/components/BlueButton';
 
 type Props = {
 	teamID: string;
@@ -143,9 +142,9 @@ const TeamCreator = ({ teamID }: Props) => {
 					))}
 				</Box>
 			</Box>
-			<Button position={'fixed'} top={'80%'} left={'80%'} onClick={() => setModalOpen(true)}>
+			<BlueButton props={{ position: 'fixed', top: '80%', left: '80%' }} onClick={() => setModalOpen(true)}>
 				Add Player
-			</Button>
+			</BlueButton>
 			{isModalOpen && (
 				<AddPlayerModal teamID={teamID} sendMessage={sendMessage} closeModal={() => setModalOpen(false)} />
 			)}

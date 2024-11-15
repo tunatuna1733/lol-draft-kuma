@@ -22,13 +22,13 @@ const Draft = ({ roomID, team, champs }: Props) => {
 	const { sendMessage } = useDraftSocket();
 
 	useEffect(() => {
-		if (!phaseData.paused) {
-			if (phaseData.eta !== 0) {
-				setTimer(phaseData.remainingTime / 1000);
-			} else {
-				setTimer(30);
-			}
-		}
+		// if (!phaseData.paused) {
+		// if (phaseData.eta !== 0) {
+		setTimer(phaseData.remainingTime / 1000);
+		// } else {
+		// 	setTimer(30);
+		// }
+		// }
 		const interval = setInterval(() => {
 			if (!phaseData.paused) setTimer((prev) => prev - 0.5);
 		}, 500);
