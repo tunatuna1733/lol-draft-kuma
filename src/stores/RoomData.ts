@@ -7,7 +7,7 @@ export const useRoomDataStore = create<RoomData>()((set) => ({
 	currentPhase: {
 		kind: 'Ban',
 		team: 'Blue',
-		order: 1,
+		order: 0,
 		eta: 0,
 		remainingTime: 0,
 		paused: false,

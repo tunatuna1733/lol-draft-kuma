@@ -73,7 +73,7 @@ const InputName = ({ team, roomID, sendMessage, setSubmit }: Props) => {
 						value={inputText}
 						setValue={setInputText}
 						placeholder="Name"
-						inputProps={{ borderColor: team === 'Red' ? '#991b1b' : '#1e40af', mt: '5px' }}
+						inputProps={{ borderColor: team === 'Red' ? '#991b1b' : '#1e40af', mt: '5px', width: '100%' }}
 					/>
 					<Box display={'flex'} justify={'center'} mt={'10px'}>
 						<BlueButton onClick={handleSubmit}>Submit</BlueButton>
