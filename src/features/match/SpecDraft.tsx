@@ -22,13 +22,7 @@ const SpecDraft = ({ roomID, champs }: Props) => {
 	const { sendMessage, waitForConnect } = useDraftSocket();
 
 	useEffect(() => {
-		if (!phaseData.paused) {
-			if (phaseData.eta !== 0) {
-				setTimer((phaseData.eta - Date.now()) / 1000);
-			} else {
-				setTimer(30);
-			}
-		}
+		setTimer(phaseData.remainingTime / 1000);
 		const interval = setInterval(() => {
 			if (!phaseData.paused) setTimer((prev) => prev - 0.5);
 		}, 500);

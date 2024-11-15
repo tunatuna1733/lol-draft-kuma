@@ -20,7 +20,7 @@ const InputName = ({ team, roomID, sendMessage, setSubmit }: Props) => {
 	const [toastOpen, setToastOpen] = useState(false);
 
 	useEffect(() => {
-		const savedName = localStorage.getItem('lol-draft-my-name');
+		const savedName = localStorage.getItem('lol-draft-my-name-new');
 		if (savedName) setInputText(savedName);
 	}, []);
 
@@ -39,7 +39,7 @@ const InputName = ({ team, roomID, sendMessage, setSubmit }: Props) => {
 
 		setName(inputText);
 		setTeam(team);
-		localStorage.setItem('lol-draft-my-name', inputText);
+		localStorage.setItem('lol-draft-my-name-new', inputText);
 		setSubmit(true);
 	};
 
