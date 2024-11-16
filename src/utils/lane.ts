@@ -1,5 +1,5 @@
-import type { Lane } from '@/types/lol';
 import { Lanes } from '@/data/lane';
+import type { Lane } from '@/types/lol';
 
 export const getLaneIcon = (lane: Lane | '') => {
 	switch (lane) {

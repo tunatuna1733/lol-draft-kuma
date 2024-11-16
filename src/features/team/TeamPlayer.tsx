@@ -72,6 +72,7 @@ const TeamPlayer = ({ player, teamID, sendMessage, listed }: Props) => {
 					width={'50px'}
 					height={'50px'}
 					borderRadius={'50%'}
+					overflow={'hidden'}
 				>
 					{player.icon && <img src={player.icon} alt={`${player.name} icon`} width={'100%'} height={'100%'} />}
 				</Box>

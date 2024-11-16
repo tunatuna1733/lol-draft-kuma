@@ -1,13 +1,13 @@
 'use client';
 
+import BlueButton from '@/components/BlueButton';
 import { useTeamDataStore } from '@/stores/TeamData';
 import useTeamSocket from '@/utils/TeamSocket';
 import { Box, Heading } from '@kuma-ui/core';
-import TeamPlayer from './TeamPlayer';
-import SwapButton from './SwapButton';
 import { useState } from 'react';
 import AddPlayerModal from './AddPlayerModal';
-import BlueButton from '@/components/BlueButton';
+import SwapButton from './SwapButton';
+import TeamPlayer from './TeamPlayer';
 
 type Props = {
 	teamID: string;

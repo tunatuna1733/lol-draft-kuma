@@ -5,7 +5,7 @@ import { useRoomDataStore } from '@/stores/RoomData';
 import type { ChampInfo } from '@/types/lol';
 import type { JoinMessage } from '@/types/socket';
 import useDraftSocket from '@/utils/DraftSocket';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import DraftScreen from './DraftScreen';
 import Header from './Header';
 

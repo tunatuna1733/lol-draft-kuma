@@ -3,7 +3,6 @@ import TextInput from '@/components/TextInput';
 import { useMyData } from '@/stores/MyData';
 import type { Team } from '@/types/lol';
 import type { JoinMessage } from '@/types/socket';
-import useStore from '@/utils/store';
 import { Box, Text } from '@kuma-ui/core';
 import { type Dispatch, type SetStateAction, useEffect, useState } from 'react';
 
