@@ -59,7 +59,7 @@ const fetchChampLanes = async () => {
 };
 
 const fetchAllChamps = async () => {
-	const res = await fetch('https://ddragon.leagueoflegends.com/cdn/14.20.1/data/ja_JP/champion.json');
+	const res = await fetch('https://ddragon.leagueoflegends.com/cdn/14.22.1/data/ja_JP/champion.json');
 	const champsResponse: ChampsResponse = await res.json();
 	const laneInfo = await fetchChampLanes();
 	const champs: ChampInfo[] = Object.values(champsResponse.data)
@@ -67,7 +67,7 @@ const fetchAllChamps = async () => {
 			id: champ.id,
 			name: champ.name,
 			key: champ.key,
-			img: `https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/${champ.id}.png`,
+			img: `https://ddragon.leagueoflegends.com/cdn/14.22.1/img/champion/${champ.id}.png`,
 			lanes: findLanes(champ.key, laneInfo),
 		}))
 		.sort((a, b) => {
