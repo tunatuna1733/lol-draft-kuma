@@ -9,7 +9,8 @@ type Commands =
 	| 'PickChamp'
 	| 'PickLane'
 	| 'RemovePlayer'
-	| 'Toggle';
+	| 'Toggle'
+	| 'DraftImage';
 
 export interface CreateRoomMessage {
 	roomName: string;
@@ -80,4 +81,9 @@ export interface RemovePlayerMessage extends BaseMessage {
 export interface ToggleMessage extends BaseMessage {
 	command: 'Toggle';
 	isPause: boolean;
+}
+
+export interface DraftImageMessage extends BaseMessage {
+	command: 'DraftImage';
+	image: string;
 }

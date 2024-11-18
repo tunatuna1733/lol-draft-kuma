@@ -145,13 +145,13 @@ const PickScreen = ({ sendMessage, champs }: Props) => {
 	);
 
 	if (isSpec) {
-		return <PickList champs={champs} />;
+		return <PickList sendMessage={sendMessage} champs={champs} />;
 	}
 
 	return (
 		<>
 			<Box display={'flex'} flexDirection={'column'} width={'100%'} justify={'center'} alignItems={'center'} gap={10}>
-				<PickList champs={champs} />
+				<PickList sendMessage={sendMessage} champs={champs} />
 				<Box
 					width={'60%'}
 					display={'flex'}

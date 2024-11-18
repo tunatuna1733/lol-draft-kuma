@@ -5,17 +5,38 @@ import { Box, Text } from '@kuma-ui/core';
 import Ban from './Ban';
 import Player from './Player';
 import PlayerList from './PlayerList';
+import { useEffect, useRef, useState } from 'react';
+import { toPng } from 'html-to-image';
+import type { DraftImageMessage } from '@/types/socket';
 
 type Props = {
+	sendMessage: (message: string) => Promise<void>;
 	champs: ChampInfo[];
 };
 
-const PickList = ({ champs }: Props) => {
+const PickList = ({ sendMessage, champs }: Props) => {
 	const roomData = useRoomDataStore((state) => state);
 	const phaseData = usePhaseData((state) => state);
+	const ref = useRef<HTMLDivElement>(null);
+	const [imageSent, setImageSent] = useState(false);
+
+	useEffect(() => {
+		if (roomData.ended && ref.current && !imageSent) {
+			toPng(ref.current, { cacheBust: true, includeQueryParams: true }).then((dataUrl) => {
+				const payload: DraftImageMessage = {
+					command: 'DraftImage',
+					roomID: roomData.id,
+					image: dataUrl,
+				};
+				sendMessage(JSON.stringify(payload));
+				setImageSent(true);
+				console.log('Image sent!');
+			});
+		}
+	}, [roomData.ended, roomData.id, sendMessage, imageSent]);
 
 	return (
-		<Box height={'520px'} bg={'#121212'}>
+		<Box height={'520px'} bg={'#121212'} ref={ref}>
 			<Box display={'flex'} flexDirection={'column'}>
 				{/* Pick */}
 				<Box height={'300px'} display={'flex'} flexDirection={'row'} justify={'center'} alignItems={'center'}>
