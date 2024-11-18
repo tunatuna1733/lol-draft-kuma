@@ -9,6 +9,11 @@ import { useEffect, useRef, useState } from 'react';
 import { toPng } from 'html-to-image';
 import type { DraftImageMessage } from '@/types/socket';
 
+const filter = (node: HTMLElement) => {
+	const exclusionClasses = ['div-bar'];
+	return !exclusionClasses.some((classname) => node.classList?.contains(classname));
+};
+
 type Props = {
 	sendMessage: (message: string) => Promise<void>;
 	champs: ChampInfo[];
@@ -22,7 +27,7 @@ const PickList = ({ sendMessage, champs }: Props) => {
 
 	useEffect(() => {
 		if (roomData.ended && ref.current && !imageSent) {
-			toPng(ref.current, { cacheBust: true, includeQueryParams: true }).then((dataUrl) => {
+			toPng(ref.current, { cacheBust: true, includeQueryParams: true, filter }).then((dataUrl) => {
 				const payload: DraftImageMessage = {
 					command: 'DraftImage',
 					roomID: roomData.id,
@@ -56,7 +61,16 @@ const PickList = ({ sendMessage, champs }: Props) => {
 									selectedChampID={roomData.selectedChamp}
 									selectedChampName={champs.find((c) => c.id === roomData.selectedChamp)?.name || ''}
 								/>
-								{index !== 0 && <Box position={'absolute'} width={'4px'} height={300} bg={'#9ca3af'} ml={'-2px'} />}
+								{index !== 0 && (
+									<Box
+										position={'absolute'}
+										width={'4px'}
+										height={300}
+										bg={'#9ca3af'}
+										ml={'-2px'}
+										className="div-bar"
+									/>
+								)}
 							</Box>
 						))}
 					</Box>
@@ -79,7 +93,16 @@ const PickList = ({ sendMessage, champs }: Props) => {
 									selectedChampID={roomData.selectedChamp}
 									selectedChampName={champs.find((c) => c.id === roomData.selectedChamp)?.name || ''}
 								/>
-								{index !== 0 && <Box position={'absolute'} width={'4px'} height={300} bg={'#9ca3af'} ml={'-2px'} />}
+								{index !== 0 && (
+									<Box
+										position={'absolute'}
+										width={'4px'}
+										height={300}
+										bg={'#9ca3af'}
+										ml={'-2px'}
+										className="div-bar"
+									/>
+								)}
 							</Box>
 						))}
 					</Box>
@@ -105,7 +128,16 @@ const PickList = ({ sendMessage, champs }: Props) => {
 									selectedChampID={roomData.selectedChamp}
 									selectedChampName={champs.find((c) => c.id === roomData.selectedChamp)?.name || ''}
 								/>
-								{index !== 0 && <Box position={'absolute'} width={'4px'} height={200} bg={'#9ca3af'} ml={'-2px'} />}
+								{index !== 0 && (
+									<Box
+										position={'absolute'}
+										width={'4px'}
+										height={200}
+										bg={'#9ca3af'}
+										ml={'-2px'}
+										className="div-bar"
+									/>
+								)}
 							</Box>
 						))}
 					</Box>
@@ -128,7 +160,16 @@ const PickList = ({ sendMessage, champs }: Props) => {
 									selectedChampID={roomData.selectedChamp}
 									selectedChampName={champs.find((c) => c.id === roomData.selectedChamp)?.name || ''}
 								/>
-								{index !== 0 && <Box position={'absolute'} width={'4px'} height={200} bg={'#9ca3af'} ml={'-2px'} />}
+								{index !== 0 && (
+									<Box
+										position={'absolute'}
+										width={'4px'}
+										height={200}
+										bg={'#9ca3af'}
+										ml={'-2px'}
+										className="div-bar"
+									/>
+								)}
 							</Box>
 						))}
 					</Box>
