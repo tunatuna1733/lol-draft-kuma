@@ -26,6 +26,14 @@ const useDraftSocket = () => {
 			} else {
 				useRoomDataStore.setState(data);
 				if (data.ended) setSpec(true);
+				const phaseData = usePhaseData.getState();
+				if (
+					data.currentPhase.kind !== phaseData.kind ||
+					data.currentPhase.team !== phaseData.team ||
+					data.currentPhase.order !== phaseData.order
+				) {
+					usePhaseData.setState(data.currentPhase);
+				}
 			}
 		};
 	}, []);

@@ -9,6 +9,7 @@ import { useState } from 'react';
 const sendCreateRoomRequest = async (matchName: string, team1Name: string, team2Name: string) => {
 	const res = await fetch(
 		`${process.env.NEXT_PUBLIC_WEBSOCKET_HOST || ''}/createRoom?matchName=${matchName}&team1Name=${team1Name}&team2Name=${team2Name}`,
+		{ method: 'POST' },
 	);
 	const resJson: { id: string } = await res.json();
 	return resJson.id;

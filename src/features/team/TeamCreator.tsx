@@ -4,10 +4,12 @@ import BlueButton from '@/components/BlueButton';
 import { useTeamDataStore } from '@/stores/TeamData';
 import useTeamSocket from '@/utils/TeamSocket';
 import { Box, Heading } from '@kuma-ui/core';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import AddPlayerModal from './AddPlayerModal';
 import SwapButton from './SwapButton';
 import TeamPlayer from './TeamPlayer';
+import Link from 'next/link';
+import type { TeamCreateDraftMessage } from '@/types/team';
 
 type Props = {
 	teamID: string;
@@ -18,13 +20,34 @@ const TeamCreator = ({ teamID }: Props) => {
 
 	const { sendMessage } = useTeamSocket(teamID);
 	const teamData = useTeamDataStore((state) => state);
+	const isReady = teamData.Blue.length === 5 && teamData.Red.length === 5;
+
+	const handleCreateDraft = useCallback(async () => {
+		const payload: TeamCreateDraftMessage = {
+			command: 'CreateDraft',
+			id: teamID,
+		};
+		sendMessage(JSON.stringify(payload));
+	}, [teamID, sendMessage]);
 
 	return (
 		<>
 			<Box width={'70%'} display={'flex'} flexDirection={'column'} justifySelf={'center'} fontFamily={'Arial'}>
 				<Box display={'flex'} mt={'3%'} mb={'50px'}>
 					<Box>
-						<Heading color={'white'}>Blue Team</Heading>
+						<Box display={'flex'}>
+							<Heading color={'white'}>Blue Team</Heading>
+							{teamData.draftId !== '' && (
+								<BlueButton props={{ m: 10, ml: 30 }}>
+									<Link
+										href={`/draft/${teamData.draftId}?team=Blue&bypass=true`}
+										style={{ textDecoration: 'none', color: 'white', fontSize: 30 }}
+									>
+										Join Draft
+									</Link>
+								</BlueButton>
+							)}
+						</Box>
 						<Box display={'flex'}>
 							<Box
 								id="blue-list-box"
@@ -72,9 +95,21 @@ const TeamCreator = ({ teamID }: Props) => {
 						To be added
 					</Box>
 					<Box>
-						<Heading color={'white'} pl={'130px'}>
-							Red Team
-						</Heading>
+						<Box display={'flex'}>
+							<Heading color={'white'} pl={'130px'}>
+								Red Team
+							</Heading>
+							{teamData.draftId !== '' && (
+								<BlueButton props={{ m: 10, ml: 30, background: 'red', _hover: { background: 'darkred' } }}>
+									<Link
+										href={`/draft/${teamData.draftId}?team=Red&bypass=true`}
+										style={{ textDecoration: 'none', color: 'white', fontSize: 30 }}
+									>
+										Join Draft
+									</Link>
+								</BlueButton>
+							)}
+						</Box>
 						<Box display={'flex'}>
 							<Box
 								id="red-arrow-buttons"
@@ -145,6 +180,16 @@ const TeamCreator = ({ teamID }: Props) => {
 			<BlueButton props={{ position: 'fixed', top: '80%', left: '80%' }} onClick={() => setModalOpen(true)}>
 				Add Player
 			</BlueButton>
+			{isReady && teamData.draftId === '' && (
+				<BlueButton
+					props={{ position: 'fixed', top: '80%', left: '5%', fontSize: 30, p: '20px' }}
+					onClick={async () => {
+						await handleCreateDraft();
+					}}
+				>
+					Create Draft Room
+				</BlueButton>
+			)}
 			{isModalOpen && (
 				<AddPlayerModal teamID={teamID} sendMessage={sendMessage} closeModal={() => setModalOpen(false)} />
 			)}

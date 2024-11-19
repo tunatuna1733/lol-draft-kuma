@@ -11,17 +11,15 @@ import WaitingList from './Waiting/WaitingList';
 type Props = {
 	sendMessage: (message: string) => Promise<void>;
 	champs: ChampInfo[];
+	bypass?: boolean;
 };
 
-const DraftScreen = ({ sendMessage, champs }: Props) => {
+const DraftScreen = ({ sendMessage, champs, bypass }: Props) => {
 	const [ready, setReady] = useState(false);
 	const roomData = useRoomDataStore((state) => state);
 	const myData = useMyData((state) => state);
 
 	if (!roomData.started) {
-		if (roomData.starting) {
-			// waiting for 5 secs
-		}
 		// waiting for player
 		return (
 			<>
@@ -75,7 +73,7 @@ const DraftScreen = ({ sendMessage, champs }: Props) => {
 	}
 	return (
 		<Box>
-			<PickScreen sendMessage={sendMessage} champs={champs} />
+			<PickScreen sendMessage={sendMessage} champs={champs} bypass={bypass} />
 		</Box>
 	);
 };

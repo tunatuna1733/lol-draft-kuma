@@ -28,9 +28,10 @@ const getPhaseText = (phaseData: PhaseData) => {
 type Props = {
 	sendMessage: (message: string) => Promise<void>;
 	champs: ChampInfo[];
+	bypass?: boolean;
 };
 
-const PickScreen = ({ sendMessage, champs }: Props) => {
+const PickScreen = ({ sendMessage, champs, bypass }: Props) => {
 	const [selectedLane, setSelectedLane] = useState<Lane | 'All'>('All');
 	const [selectedChampID, setSelectedChampID] = useState<string>();
 	const [searchString, setSearchString] = useState('');
@@ -218,28 +219,30 @@ const PickScreen = ({ sendMessage, champs }: Props) => {
 			>
 				LOCK IN
 			</BlueButton>
-			<Box position={'fixed'} top={'80%'} left={'5%'} display={'flex'} flexDirection={'column'}>
-				<Heading as="h2" color={'white'} mb={0}>
-					Lane select
-				</Heading>
-				<Select
-					value={myLane}
-					onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-						handleLanePick(e.target.value);
-					}}
-					borderRadius={'10px'}
-					p={'5px'}
-					mt={'5px'}
-					fontSize={'20px'}
-					width={'200px'}
-				>
-					<option value={'Top'}>Top</option>
-					<option value={'Jungle'}>Jungle</option>
-					<option value={'Mid'}>Mid</option>
-					<option value={'Bot'}>Bot</option>
-					<option value={'Support'}>Support</option>
-				</Select>
-			</Box>
+			{!bypass && (
+				<Box position={'fixed'} top={'80%'} left={'5%'} display={'flex'} flexDirection={'column'}>
+					<Heading as="h2" color={'white'} mb={0}>
+						Lane select
+					</Heading>
+					<Select
+						value={myLane}
+						onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+							handleLanePick(e.target.value);
+						}}
+						borderRadius={'10px'}
+						p={'5px'}
+						mt={'5px'}
+						fontSize={'20px'}
+						width={'200px'}
+					>
+						<option value={'Top'}>Top</option>
+						<option value={'Jungle'}>Jungle</option>
+						<option value={'Mid'}>Mid</option>
+						<option value={'Bot'}>Bot</option>
+						<option value={'Support'}>Support</option>
+					</Select>
+				</Box>
+			)}
 		</>
 	);
 };

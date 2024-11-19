@@ -1,28 +1,32 @@
-import type { Team } from '@/types/lol';
 import { Box, Text } from '@kuma-ui/core';
 import ToggleButton from './ToggleButton';
+import { usePhaseData } from '@/stores/PhaseData';
+import { useRoomDataStore } from '@/stores/RoomData';
+import { useEffect, useState } from 'react';
+import { clearInterval, setInterval } from 'worker-timers';
+import { useMyData } from '@/stores/MyData';
 
 type Props = {
-	team1Name: string;
-	team2Name: string;
-	currentTeam?: Team;
-	currentKind?: 'Ban' | 'Pick';
-	currentTime: number;
-	started: boolean;
-	ended: boolean;
 	sendMessage: (message: string) => Promise<void>;
 };
 
-const Header = ({
-	team1Name,
-	team2Name,
-	currentTeam,
-	currentKind,
-	currentTime,
-	started,
-	ended,
-	sendMessage,
-}: Props) => {
+const Header = ({ sendMessage }: Props) => {
+	const [timer, setTimer] = useState(0);
+	const roomData = useRoomDataStore((state) => state);
+	const phaseData = usePhaseData((state) => state);
+	const myTeam = useMyData((state) => state.team);
+
+	useEffect(() => {
+		setTimer(phaseData.remainingTime / 1000);
+		const interval = setInterval(() => {
+			if (!phaseData.paused) setTimer((prev) => prev - 0.5);
+		}, 500);
+
+		return () => {
+			clearInterval(interval);
+		};
+	}, [phaseData]);
+
 	return (
 		<Box
 			display={'grid'}
@@ -36,7 +40,12 @@ const Header = ({
 			gridTemplateColumns={'1fr 100px 1fr'}
 		>
 			<Box width={'100%'}>
-				<Box display={'flex'} width={'100%'} height={'90px'}>
+				<Box
+					display={'flex'}
+					width={'100%'}
+					height={'90px'}
+					background={myTeam === 'Blue' ? 'rgb(20 20 240 / 0.2)' : ''}
+				>
 					<Box width={'60%'} display={'flex'} alignItems={'center'}>
 						<Text
 							color={'white'}
@@ -46,22 +55,24 @@ const Header = ({
 							fontFamily={'Arial'}
 							textShadow={'3px 5px 6px rgba(0, 60, 255, 1)'}
 						>
-							{team1Name}
+							{roomData.teams.Blue.name}
 						</Text>
 					</Box>
 					<Box width={'40%'} display={'flex'} justify={'right'} alignItems={'center'}>
 						<Text color={'white'} fontSize={60} my={'auto'} fontFamily={'Arial'} mr={'50px'}>
-							{started && !ended && currentTeam === 'Blue' ? `${currentKind} ${currentTime}s` : ''}
+							{roomData.started && !roomData.ended && phaseData.team === 'Blue'
+								? `${phaseData.kind} ${Math.trunc(timer)}s`
+								: ''}
 						</Text>
 					</Box>
 				</Box>
-				{started && !ended && currentTeam === 'Blue' ? (
+				{roomData.started && !roomData.ended && phaseData.team === 'Blue' ? (
 					<Box width={'100%'} height={'10px'} position={'relative'} overflow={'hidden'} transform={'scaleX(-1)'}>
 						<Box
 							height={'100%'}
 							background={'#1e40af'}
 							position={'absolute'}
-							width={`${(currentTime / 30) * 100}%`}
+							width={`${(Math.trunc(timer) / 30) * 100}%`}
 							transition={'width 1s linear'}
 						/>
 					</Box>
@@ -70,13 +81,20 @@ const Header = ({
 				)}
 			</Box>
 			<Box width={'100%'} height={'100px'}>
-				{started && !ended && <ToggleButton sendMessage={sendMessage} />}
+				{roomData.started && !roomData.ended && <ToggleButton sendMessage={sendMessage} />}
 			</Box>
 			<Box width={'100%'}>
-				<Box display={'flex'} width={'100%'} height={'90px'}>
+				<Box
+					display={'flex'}
+					width={'100%'}
+					height={'90px'}
+					background={myTeam === 'Red' ? 'rgb(240 20 20 / 0.1)' : ''}
+				>
 					<Box width={'40%'} display={'flex'} alignItems={'center'}>
 						<Text color={'white'} fontSize={60} my={'auto'} fontFamily={'Arial'} ml={'50px'}>
-							{started && !ended && currentTeam === 'Red' ? `${currentKind} ${currentTime}s` : ''}
+							{roomData.started && !roomData.ended && phaseData.team === 'Red'
+								? `${phaseData.kind} ${Math.trunc(timer)}s`
+								: ''}
 						</Text>
 					</Box>
 					<Box width={'60%'} display={'flex'} justify={'right'} alignItems={'center'}>
@@ -88,17 +106,17 @@ const Header = ({
 							fontFamily={'Arial'}
 							textShadow={'3px 5px 6px rgba(255, 60, 0, 1)'}
 						>
-							{team2Name}
+							{roomData.teams.Red.name}
 						</Text>
 					</Box>
 				</Box>
-				{started && !ended && currentTeam === 'Red' ? (
+				{roomData.started && !roomData.ended && phaseData.team === 'Red' ? (
 					<Box width={'100%'} height={'10px'} position={'relative'} overflow={'hidden'}>
 						<Box
 							height={'100%'}
 							background={'#991b1b'}
 							position={'absolute'}
-							width={`${(currentTime / 30) * 100}%`}
+							width={`${(Math.trunc(timer) / 30) * 100}%`}
 							transition={'width 1s linear'}
 						/>
 					</Box>

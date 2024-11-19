@@ -1,53 +1,41 @@
 'use client';
 
-import { usePhaseData } from '@/stores/PhaseData';
-import { useRoomDataStore } from '@/stores/RoomData';
 import type { ChampInfo, Team } from '@/types/lol';
 import useDraftSocket from '@/utils/DraftSocket';
 import { Box } from '@kuma-ui/core';
-import { useEffect, useState } from 'react';
-import { clearInterval, setInterval } from 'worker-timers';
+import { useState } from 'react';
 import DraftScreen from './DraftScreen';
 import Header from './Header';
 import InputName from './InputName';
+import type { JoinMessage } from '@/types/socket';
+import { useMyData } from '@/stores/MyData';
 
-type Props = { roomID: string; team: Team; champs: ChampInfo[] };
+type Props = { roomID: string; team: Team; champs: ChampInfo[]; bypass: boolean };
 
-const Draft = ({ roomID, team, champs }: Props) => {
+const Draft = ({ roomID, team, champs, bypass }: Props) => {
 	const [submit, setSubmit] = useState(false);
-	const [timer, setTimer] = useState(0);
 
-	const roomData = useRoomDataStore((state) => state);
-	const phaseData = usePhaseData((state) => state);
-	const { sendMessage } = useDraftSocket();
+	const { sendMessage, waitForConnect } = useDraftSocket();
 
-	useEffect(() => {
-		// if (!phaseData.paused) {
-		// if (phaseData.eta !== 0) {
-		setTimer(phaseData.remainingTime / 1000);
-		// } else {
-		// 	setTimer(30);
-		// }
-		// }
-		const interval = setInterval(() => {
-			if (!phaseData.paused) setTimer((prev) => prev - 0.5);
-		}, 500);
+	const setTeam = useMyData((state) => state.setTeam);
 
-		return () => {
-			clearInterval(interval);
-		};
-	}, [phaseData]);
-
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-	useEffect(() => {
-		if (
-			roomData.currentPhase.kind !== phaseData.kind ||
-			roomData.currentPhase.team !== phaseData.team ||
-			roomData.currentPhase.order !== phaseData.order
-		) {
-			usePhaseData.setState(roomData.currentPhase);
+	if (typeof window !== 'undefined') {
+		if (roomID && !submit && bypass) {
+			waitForConnect(() => {
+				const payload: JoinMessage = {
+					command: 'Join',
+					name: '',
+					team: 'Blue',
+					isSpec: false,
+					roomID,
+					bypass,
+				};
+				sendMessage(JSON.stringify(payload));
+				setSubmit(true);
+				setTeam(team);
+			});
 		}
-	}, [roomData]);
+	}
 
 	if (!submit && (team === 'Blue' || team === 'Red')) {
 		return (
@@ -60,16 +48,7 @@ const Draft = ({ roomID, team, champs }: Props) => {
 	if (team === 'Blue' || team === 'Red') {
 		return (
 			<>
-				<Header
-					team1Name={roomData.teams.Blue.name}
-					team2Name={roomData.teams.Red.name}
-					currentTeam={phaseData.team}
-					currentKind={phaseData.kind}
-					currentTime={Math.trunc(timer)}
-					started={roomData.started}
-					ended={roomData.ended}
-					sendMessage={sendMessage}
-				/>
+				<Header sendMessage={sendMessage} />
 				<DraftScreen sendMessage={sendMessage} champs={champs} />
 			</>
 		);

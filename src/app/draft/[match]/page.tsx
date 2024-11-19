@@ -79,9 +79,11 @@ const fetchAllChamps = async () => {
 const Match = async ({
 	params,
 	searchParams,
-}: { params: Promise<{ match: string }>; searchParams?: Promise<{ team: string }> }) => {
+}: { params: Promise<{ match: string }>; searchParams?: Promise<{ team: string; bypass?: string }> }) => {
 	const rawTeam = (await searchParams)?.team;
+	const rawBypass = (await searchParams)?.bypass;
 	const team = rawTeam !== 'Blue' && rawTeam !== 'Red' ? 'Spec' : (rawTeam as Team);
+	const bypass = rawBypass === 'true';
 	const champs = await fetchAllChamps();
 	const roomID = (await params).match;
 	return (
@@ -89,7 +91,7 @@ const Match = async ({
 			{team === 'Spec' ? (
 				<SpecDraft roomID={roomID} champs={champs} />
 			) : (
-				<Draft roomID={roomID} champs={champs} team={team} />
+				<Draft roomID={roomID} champs={champs} team={team} bypass={bypass} />
 			)}
 		</>
 	);

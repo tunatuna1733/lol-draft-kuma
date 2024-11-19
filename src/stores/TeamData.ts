@@ -7,4 +7,5 @@ export const useTeamDataStore = create<TeamCreationData>()((set) => ({
 	Blue: [],
 	Red: [],
 	Unassigned: [],
+	draftId: '',
 }));
