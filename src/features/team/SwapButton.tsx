@@ -23,6 +23,7 @@ const SwapButton = ({ teamID, name, team, sendMessage }: Props) => {
 		},
 		[sendMessage, teamID],
 	);
+
 	return (
 		<Button
 			height={'60px'}

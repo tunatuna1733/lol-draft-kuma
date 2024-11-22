@@ -43,6 +43,7 @@ export interface PlayerData {
 export interface TeamCreationData {
 	id: string;
 	createdTime: number;
+	channelId?: string;
 	Blue: PlayerData[];
 	Red: PlayerData[];
 	Unassigned: PlayerData[];

@@ -8,7 +8,6 @@ const useDraftSocket = () => {
 	const [ws, setWs] = useState<WebSocket>();
 	const setSpec = useMyData((state) => state.setSpec);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		const url = process.env.NEXT_PUBLIC_WEBSOCKET_HOST || '';
 		const socket = new WebSocket(url);
@@ -36,7 +35,7 @@ const useDraftSocket = () => {
 				}
 			}
 		};
-	}, []);
+	}, [setSpec]);
 
 	const sendMessage = async (message: string) => {
 		if (ws) ws.send(message);

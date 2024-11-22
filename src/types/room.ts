@@ -38,6 +38,7 @@ export interface RoomData {
 	started: boolean;
 	ended: boolean;
 	expire: number;
+	channelId?: string;
 }
 
 export interface StartPhase extends PhaseData {

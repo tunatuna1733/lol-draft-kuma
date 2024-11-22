@@ -50,14 +50,13 @@ const PickScreen = ({ sendMessage, champs, bypass }: Props) => {
 		...Object.values(teams).flatMap((t) => t.players.map((p) => p.champ)),
 	];
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		const pt = getPhaseText(phaseData);
 		if (pt !== phaseText) {
 			setSelectedChampID(undefined);
 			setPhaseText(pt);
 		}
-	}, [phaseData]);
+	}, [phaseData, phaseText]);
 
 	useEffect(() => {
 		filterChamps(debouncedText, selectedLane);
@@ -219,7 +218,7 @@ const PickScreen = ({ sendMessage, champs, bypass }: Props) => {
 			>
 				LOCK IN
 			</BlueButton>
-			{!bypass && (
+			{bypass !== true && (
 				<Box position={'fixed'} top={'80%'} left={'5%'} display={'flex'} flexDirection={'column'}>
 					<Heading as="h2" color={'white'} mb={0}>
 						Lane select

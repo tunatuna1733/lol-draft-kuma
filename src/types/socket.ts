@@ -87,4 +87,5 @@ export interface ToggleMessage extends BaseMessage {
 export interface DraftImageMessage extends BaseMessage {
 	command: 'DraftImage';
 	image: string;
+	channelId?: string;
 }

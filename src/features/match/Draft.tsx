@@ -49,7 +49,7 @@ const Draft = ({ roomID, team, champs, bypass }: Props) => {
 		return (
 			<>
 				<Header sendMessage={sendMessage} />
-				<DraftScreen sendMessage={sendMessage} champs={champs} />
+				<DraftScreen sendMessage={sendMessage} champs={champs} bypass={bypass} />
 			</>
 		);
 	}
