@@ -5,8 +5,8 @@ import './globals.css';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 
 export const metadata: Metadata = {
-	title: 'LoL Draft Pick',
-	description: 'Useful tool for simulating LoL draft ban-pick system.',
+	title: 'LoL Custom Tools',
+	description: 'Useful tools for LoL custom match.',
 };
 
 export default function RootLayout({

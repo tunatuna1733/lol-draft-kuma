@@ -1,6 +1,12 @@
 import Draft from '@/features/match/Draft';
 import SpecDraft from '@/features/match/SpecDraft';
 import type { ChampInfo, ChampsResponse, Lane, Team } from '@/types/lol';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	title: 'LoL Draft Pick',
+	description: 'Draft pick tool for LoL custom match.',
+};
 
 type rawLaneInfo = {
 	SUPPORT: { [key: string]: number };
