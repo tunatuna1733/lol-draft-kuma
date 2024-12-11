@@ -23,7 +23,7 @@ const InputTeam = () => {
 
 	if (!matchID) {
 		return (
-			<Box width="60%" display={'flex'} flexDirection={'column'} gap={10}>
+			<Box width="60%" display={'flex'} flexDirection={'column'} gap={10} mt={'50px'}>
 				<TextInput
 					id="match-name-input"
 					label="Match name"
@@ -33,10 +33,10 @@ const InputTeam = () => {
 					inputProps={{ borderColor: '#6b7280' }}
 				/>
 				<Box display="flex" flexDirection="row" width="100%" justify="space-between" alignItems="center">
-					<Box width="40%">
+					<Box width="40%" display="flex" flexDirection="column">
 						<TextInput id="team1-name-input" label="Team1 name" value={team1Name} setValue={setTeam1Name} />
 					</Box>
-					<Box width="40%">
+					<Box width="40%" display="flex" flexDirection="column">
 						<TextInput
 							id="team2-name-input"
 							label="Team2 name"
