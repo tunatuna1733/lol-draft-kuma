@@ -2,14 +2,15 @@
 
 import BlueButton from '@/components/BlueButton';
 import { useTeamDataStore } from '@/stores/TeamData';
+import type { TeamCreateDraftMessage } from '@/types/team';
 import useTeamSocket from '@/utils/TeamSocket';
 import { Box, Heading } from '@kuma-ui/core';
+import Link from 'next/link';
 import { useCallback, useState } from 'react';
 import AddPlayerModal from './AddPlayerModal';
 import SwapButton from './SwapButton';
 import TeamPlayer from './TeamPlayer';
-import Link from 'next/link';
-import type { TeamCreateDraftMessage } from '@/types/team';
+import TransferButton from './TransferButton';
 
 type Props = {
 	teamID: string;
@@ -80,7 +81,7 @@ const TeamCreator = ({ teamID }: Props) => {
 								alignItems={'center'}
 							>
 								{Array.from({ length: teamData.Blue.length }, (_, i) => i).map((index) => (
-									<SwapButton
+									<TransferButton
 										teamID={teamID}
 										name={teamData.Blue[index].name}
 										team={'Red'}
@@ -91,8 +92,27 @@ const TeamCreator = ({ teamID }: Props) => {
 							</Box>
 						</Box>
 					</Box>
-					<Box id="swap-buttons" width={'200px'}>
-						To be added
+					<Box>
+						<Heading visibility={'hidden'}>a</Heading>
+						<Box
+							id="swap-buttons"
+							width={'100px'}
+							display={'flex'}
+							flexDirection={'column'}
+							px={'15px'}
+							pt={'10px'}
+							alignItems={'center'}
+						>
+							{Array.from({ length: Math.min(teamData.Blue.length, teamData.Red.length) }, (_, i) => i).map((index) => (
+								<SwapButton
+									teamID={teamID}
+									bluePlayer={teamData.Blue[index].name}
+									redPlayer={teamData.Red[index].name}
+									sendMessage={sendMessage}
+									key={index}
+								/>
+							))}
+						</Box>
 					</Box>
 					<Box>
 						<Box display={'flex'}>
@@ -121,7 +141,7 @@ const TeamCreator = ({ teamID }: Props) => {
 								alignItems={'center'}
 							>
 								{Array.from({ length: teamData.Red.length }, (_, i) => i).map((index) => (
-									<SwapButton
+									<TransferButton
 										teamID={teamID}
 										name={teamData.Red[index].name}
 										team={'Blue'}

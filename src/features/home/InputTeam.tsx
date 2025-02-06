@@ -67,13 +67,13 @@ const InputTeam = () => {
 					<TextInput
 						id="team1-name"
 						label={team1Name}
-						value={`${window.location}draft/${matchID}?team=Blue`}
+						value={`${window.location}/${matchID}?team=Blue`}
 						isReadOnly={true}
 						inputProps={{ background: '#3b82f633' }}
 					/>
 				</Box>
 				<Box width={'50px'} height={'50px'} display={'flex'} alignItems={'center'} mt={'20px'}>
-					<CopyButton text={`${window.location}draft/${matchID}?team=Blue`} />
+					<CopyButton text={`${window.location}/${matchID}?team=Blue`} />
 				</Box>
 			</Box>
 			<Box display={'flex'} justify={'space-between'} alignItems={'center'} mt={'50px'}>
@@ -81,13 +81,13 @@ const InputTeam = () => {
 					<TextInput
 						id="team2-name"
 						label={team2Name}
-						value={`${window.location}draft/${matchID}?team=Red`}
+						value={`${window.location}/${matchID}?team=Red`}
 						isReadOnly={true}
 						inputProps={{ background: '#ef444433' }}
 					/>
 				</Box>
 				<Box width={'50px'} height={'50px'} display={'flex'} alignItems={'center'} mt={'20px'}>
-					<CopyButton text={`${window.location}draft/${matchID}?team=Red`} />
+					<CopyButton text={`${window.location}/${matchID}?team=Red`} />
 				</Box>
 			</Box>
 			<Box display={'flex'} justify={'space-between'} alignItems={'center'} mt={'50px'}>
@@ -95,13 +95,13 @@ const InputTeam = () => {
 					<TextInput
 						id="spectator"
 						label={'Spectator'}
-						value={`${window.location}draft/${matchID}`}
+						value={`${window.location}/${matchID}`}
 						isReadOnly={true}
 						inputProps={{ background: '#37415133' }}
 					/>
 				</Box>
 				<Box width={'50px'} height={'50px'} display={'flex'} alignItems={'center'} mt={'20px'}>
-					<CopyButton text={`${window.location}draft/${matchID}`} />
+					<CopyButton text={`${window.location}/${matchID}`} />
 				</Box>
 			</Box>
 		</Box>

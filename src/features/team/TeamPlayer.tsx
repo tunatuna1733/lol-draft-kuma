@@ -19,7 +19,7 @@ type Props = {
 const TeamPlayer = ({ player, teamID, sendMessage, listed }: Props) => {
 	const handleLanePick = useCallback(
 		(val: string) => {
-			if (val === 'Top' || val === 'Jungle' || val === 'Mid' || val === 'Bot' || val === 'Support') {
+			if (val === 'Top' || val === 'Jungle' || val === 'Mid' || val === 'Bot' || val === 'Support' || val === '') {
 				const payload: TeamPickLaneMessage = {
 					command: 'PickLane',
 					id: teamID,

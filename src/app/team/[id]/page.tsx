@@ -1,5 +1,5 @@
-import type { Metadata } from 'next';
 import TeamCreator from '@/features/team/TeamCreator';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
 	title: 'LoL Custom Team Organizer',
@@ -8,7 +8,11 @@ export const metadata: Metadata = {
 
 const Team = async ({ params }: { params: Promise<{ id: string }> }) => {
 	const teamID = (await params).id;
-	return <TeamCreator teamID={teamID} />;
+	return (
+		<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+			<TeamCreator teamID={teamID} />
+		</div>
+	);
 };
 
 export default Team;

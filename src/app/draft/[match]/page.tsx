@@ -64,8 +64,15 @@ const fetchChampLanes = async () => {
 	}
 };
 
+const fetchLatestVersion = async () => {
+	const res = await fetch('https://ddragon.leagueoflegends.com/api/versions.json');
+	const versions: string[] = await res.json();
+	return versions[0];
+};
+
 const fetchAllChamps = async () => {
-	const res = await fetch('https://ddragon.leagueoflegends.com/cdn/14.22.1/data/ja_JP/champion.json');
+	const version = await fetchLatestVersion();
+	const res = await fetch(`https://ddragon.leagueoflegends.com/cdn/${version}/data/ja_JP/champion.json`);
 	const champsResponse: ChampsResponse = await res.json();
 	const laneInfo = await fetchChampLanes();
 	const champs: ChampInfo[] = Object.values(champsResponse.data)
@@ -73,7 +80,7 @@ const fetchAllChamps = async () => {
 			id: champ.id,
 			name: champ.name,
 			key: champ.key,
-			img: `https://ddragon.leagueoflegends.com/cdn/14.22.1/img/champion/${champ.id}.png`,
+			img: `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champ.id}.png`,
 			lanes: findLanes(champ.key, laneInfo),
 		}))
 		.sort((a, b) => {

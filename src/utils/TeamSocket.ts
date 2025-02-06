@@ -1,11 +1,9 @@
-import { useMyData } from '@/stores/MyData';
 import { useTeamDataStore } from '@/stores/TeamData';
 import type { TeamCreationData } from '@/types/team';
 import { useEffect, useState } from 'react';
 
 const useTeamSocket = (teamID: string) => {
 	const [ws, setWs] = useState<WebSocket>();
-	const setSpec = useMyData((state) => state.setSpec);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
