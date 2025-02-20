@@ -14,6 +14,7 @@ const useDraftSocket = () => {
 		setWs(socket);
 
 		socket.onmessage = async (ev) => {
+			if (ev.data === 'KeepAlive') return;
 			const data: RoomData | StartPhase | CurrentPhase | ResultMessage | MakeSpec = JSON.parse(ev.data);
 			if ('success' in data) {
 				return;

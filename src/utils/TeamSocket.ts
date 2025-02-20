@@ -12,6 +12,7 @@ const useTeamSocket = (teamID: string) => {
 		setWs(socket);
 
 		socket.onmessage = async (ev) => {
+			if (ev.data === 'KeepAlive') return;
 			const data: TeamCreationData = JSON.parse(ev.data);
 			useTeamDataStore.setState(data);
 		};
