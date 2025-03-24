@@ -1,14 +1,14 @@
 'use client';
 
+import { useMyData } from '@/stores/MyData';
 import type { ChampInfo, Team } from '@/types/lol';
+import type { JoinMessage } from '@/types/socket';
 import useDraftSocket from '@/utils/DraftSocket';
 import { Box } from '@kuma-ui/core';
 import { useState } from 'react';
 import DraftScreen from './DraftScreen';
 import Header from './Header';
 import InputName from './InputName';
-import type { JoinMessage } from '@/types/socket';
-import { useMyData } from '@/stores/MyData';
 
 type Props = { roomID: string; team: Team; champs: ChampInfo[]; bypass: boolean };
 

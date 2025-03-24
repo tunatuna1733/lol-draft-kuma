@@ -1,6 +1,5 @@
 import type { Team } from '@/types/lol';
-import { Box } from '@kuma-ui/core';
-import Image from 'next/image';
+import { Box, Image } from '@kuma-ui/core';
 import { Tooltip } from 'react-tooltip';
 
 type Props = {
@@ -28,25 +27,9 @@ const Player = ({ team, champID, champName, inFocus, selectedChampID, selectedCh
 				id={inFocus ? `player-picking-${selectedChampID}` : `player-pick-${champID}`}
 			>
 				{champID !== '' ? (
-					<Image
-						fill={true}
-						src={url}
-						alt={champID}
-						style={{ objectFit: 'contain' }}
-						sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              33vw"
-					/>
+					<Image src={url} alt={champID} style={{ objectFit: 'contain' }} w={'100%'} h={'100%'} />
 				) : inFocus && selectedChampID !== '' ? (
-					<Image
-						fill={true}
-						src={selectedUrl}
-						alt={selectedChampID}
-						style={{ objectFit: 'contain' }}
-						sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              33vw"
-					/>
+					<Image src={selectedUrl} alt={selectedChampID} style={{ objectFit: 'contain' }} w={'100%'} h={'100%'} />
 				) : (
 					<Box
 						position={'relative'}

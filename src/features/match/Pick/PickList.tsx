@@ -1,13 +1,13 @@
 import { usePhaseData } from '@/stores/PhaseData';
 import { useRoomDataStore } from '@/stores/RoomData';
 import type { ChampInfo } from '@/types/lol';
+import type { DraftImageMessage } from '@/types/socket';
 import { Box, Text } from '@kuma-ui/core';
+import { toPng } from 'html-to-image';
+import { useEffect, useRef, useState } from 'react';
 import Ban from './Ban';
 import Player from './Player';
 import PlayerList from './PlayerList';
-import { useEffect, useRef, useState } from 'react';
-import { toPng } from 'html-to-image';
-import type { DraftImageMessage } from '@/types/socket';
 
 const filter = (node: HTMLElement) => {
 	const exclusionClasses = ['div-bar'];
@@ -75,7 +75,9 @@ const PickList = ({ sendMessage, champs }: Props) => {
 						))}
 					</Box>
 					<Box height={'100%'} width={'100px'}>
-						<Text>Picks</Text>
+						<Text textAlign={'center'} color={'white'} fontFamily={'Arial'} fontSize={'x-large'}>
+							Picks
+						</Text>
 					</Box>
 					<Box display={'flex'} flexDirection={'row'} height={'100%'}>
 						{roomData.teams.Red.players.map((player, index) => (
@@ -142,7 +144,9 @@ const PickList = ({ sendMessage, champs }: Props) => {
 						))}
 					</Box>
 					<Box height={'100%'} width={'100px'}>
-						<Text>Bans</Text>
+						<Text textAlign={'center'} color={'white'} fontFamily={'Arial'} fontSize={'x-large'}>
+							Bans
+						</Text>
 					</Box>
 					<Box display={'flex'} flexDirection={'row'} height={'100%'}>
 						{roomData.teams.Red.bans.map((ban, index) => (

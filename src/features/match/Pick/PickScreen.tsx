@@ -150,7 +150,15 @@ const PickScreen = ({ sendMessage, champs, bypass }: Props) => {
 
 	return (
 		<>
-			<Box display={'flex'} flexDirection={'column'} width={'100%'} justify={'center'} alignItems={'center'} gap={10}>
+			<Box
+				display={'flex'}
+				flexDirection={'column'}
+				width={'100%'}
+				justify={'center'}
+				alignItems={'center'}
+				gap={10}
+				boxSizing={'border-box'}
+			>
 				<PickList sendMessage={sendMessage} champs={champs} />
 				<Box
 					width={'60%'}
@@ -220,7 +228,7 @@ const PickScreen = ({ sendMessage, champs, bypass }: Props) => {
 			</BlueButton>
 			{bypass !== true && (
 				<Box position={'fixed'} top={'80%'} left={'5%'} display={'flex'} flexDirection={'column'}>
-					<Heading as="h2" color={'white'} mb={0}>
+					<Heading as="h2" color={'white'} mb={0} fontFamily={'Arial'}>
 						Lane select
 					</Heading>
 					<Select

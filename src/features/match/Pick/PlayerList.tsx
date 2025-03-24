@@ -34,7 +34,7 @@ const PlayerList = ({ team }: Props) => {
 								{leafIcon}
 							</Box>
 						)}
-						<Text ml={'5px'} my={0} color={'white'} fontSize={20}>
+						<Text ml={'5px'} my={0} color={'white'} fontSize={20} fontFamily={'Arial'}>
 							{player.name}
 						</Text>
 					</Box>

@@ -2,9 +2,8 @@ import BlueButton from '@/components/BlueButton';
 import { useMyData } from '@/stores/MyData';
 import { useRoomDataStore } from '@/stores/RoomData';
 import type { ChampInfo } from '@/types/lol';
-import type { ReadyMessage } from '@/types/socket';
+import type { StartMessage } from '@/types/socket';
 import { Box, Text } from '@kuma-ui/core';
-import { useState } from 'react';
 import PickScreen from './Pick/PickScreen';
 import WaitingList from './Waiting/WaitingList';
 
@@ -15,7 +14,6 @@ type Props = {
 };
 
 const DraftScreen = ({ sendMessage, champs, bypass }: Props) => {
-	const [ready, setReady] = useState(false);
 	const roomData = useRoomDataStore((state) => state);
 	const myData = useMyData((state) => state);
 
@@ -24,23 +22,20 @@ const DraftScreen = ({ sendMessage, champs, bypass }: Props) => {
 		return (
 			<>
 				<Box width={'100%'} display={'flex'} flexDirection={'column'} justify={'center'} alignItems={'center'}>
-					<WaitingList />
+					<WaitingList sendMessage={sendMessage} />
 					{!myData.isSpec && (
 						<BlueButton
 							onClick={() => {
-								const payload: ReadyMessage = {
-									command: 'Ready',
-									isReady: true,
+								const payload: StartMessage = {
+									command: 'Start',
 									roomID: roomData.id,
-									team: myData.team,
 								};
 								sendMessage(JSON.stringify(payload));
-								setReady(true);
 							}}
-							disabled={ready}
+							disabled={!roomData.teams.Blue.isReady || !roomData.teams.Red.isReady}
 							props={{ fontSize: '30px', p: '15px' }}
 						>
-							{ready ? 'Waiting for another team...' : 'Ready'}
+							Start Draft
 						</BlueButton>
 					)}
 				</Box>

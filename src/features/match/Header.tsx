@@ -1,10 +1,10 @@
-import { Box, Text } from '@kuma-ui/core';
-import ToggleButton from './ToggleButton';
+import { useMyData } from '@/stores/MyData';
 import { usePhaseData } from '@/stores/PhaseData';
 import { useRoomDataStore } from '@/stores/RoomData';
+import { Box, Text } from '@kuma-ui/core';
 import { useEffect, useState } from 'react';
 import { clearInterval, setInterval } from 'worker-timers';
-import { useMyData } from '@/stores/MyData';
+import ToggleButton from './ToggleButton';
 
 type Props = {
 	sendMessage: (message: string) => Promise<void>;
