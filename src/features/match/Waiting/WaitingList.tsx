@@ -15,7 +15,7 @@ const WaitingList = ({ sendMessage }: Props) => {
 	const playerIndex = [0, 1, 2, 3, 4];
 
 	return (
-		<Box height={'500px'} bg={'#121212'}>
+		<Box bg={'#121212'}>
 			<Box height={'300px'} display={'flex'} flexDirection={'row'} justify={'center'} alignItems={'center'}>
 				<Box display={'flex'} height={'100%'}>
 					{playerIndex.map((index) => (

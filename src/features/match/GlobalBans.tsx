@@ -43,8 +43,10 @@ const GlobalBans = ({ sendMessage, champs }: Props) => {
 	);
 
 	return (
-		<details>
-			<summary>Global Bans</summary>
+		<details style={{ paddingTop: '30px' }}>
+			<summary style={{ fontFamily: 'Arial', color: 'white', fontSize: 20, display: 'flex', justifyContent: 'center' }}>
+				Edit Global Bans
+			</summary>
 			<Grid display={'grid'} width={'60%'} gridTemplateColumns={'repeat(6, 1fr)'} gap={15}>
 				{champs.map((champ) => (
 					<Box key={champ.id} display={'flex'} justify={'center'}>

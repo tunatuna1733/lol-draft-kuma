@@ -31,4 +31,5 @@ export const useRoomDataStore = create<RoomData>()((set) => ({
 	started: false,
 	ended: false,
 	expire: Date.now() + 20 * 60 * 1000,
+	globalBans: [],
 }));
