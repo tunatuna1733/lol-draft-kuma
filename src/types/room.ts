@@ -39,6 +39,7 @@ export interface RoomData {
 	ended: boolean;
 	expire: number;
 	channelId?: string;
+	globalBans: string[];
 }
 
 export interface StartPhase extends PhaseData {

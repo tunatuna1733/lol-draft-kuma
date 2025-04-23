@@ -4,6 +4,7 @@ import { useRoomDataStore } from '@/stores/RoomData';
 import type { ChampInfo } from '@/types/lol';
 import type { StartMessage } from '@/types/socket';
 import { Box, Text } from '@kuma-ui/core';
+import GlobalBans from './GlobalBans';
 import PickScreen from './Pick/PickScreen';
 import WaitingList from './Waiting/WaitingList';
 
@@ -21,6 +22,9 @@ const DraftScreen = ({ sendMessage, champs, bypass }: Props) => {
 		// waiting for player
 		return (
 			<>
+				{
+					// Waiting for players to join
+				}
 				<Box width={'100%'} display={'flex'} flexDirection={'column'} justify={'center'} alignItems={'center'}>
 					<WaitingList sendMessage={sendMessage} />
 					{!myData.isSpec && (
@@ -38,7 +42,11 @@ const DraftScreen = ({ sendMessage, champs, bypass }: Props) => {
 							Start Draft
 						</BlueButton>
 					)}
+					<GlobalBans sendMessage={sendMessage} champs={champs} />
 				</Box>
+				{
+					// Draft starting
+				}
 				{roomData.starting && (
 					<>
 						<Box
