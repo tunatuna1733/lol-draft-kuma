@@ -40,7 +40,7 @@ const PickScreen = ({ sendMessage, champs, bypass }: Props) => {
 	const [myLane, setMyLane] = useState<Lane>();
 
 	const { team, name, isSpec } = useMyData((state) => state);
-	const { teams, id } = useRoomDataStore((state) => state);
+	const { teams, id, globalBans } = useRoomDataStore((state) => state);
 	const phaseData = usePhaseData((state) => state);
 
 	const [phaseText, setPhaseText] = useState(`${phaseData.kind}-${phaseData.team}-${phaseData.order}`);
@@ -206,7 +206,7 @@ const PickScreen = ({ sendMessage, champs, bypass }: Props) => {
 								selected={selectedChampID === champ.id}
 								onClick={() => handleChampSelect(champ.id)}
 								disabled={phaseData.team !== team}
-								banned={bans.includes(champ.id)}
+								banned={bans.includes(champ.id) || globalBans.includes(champ.id)}
 							/>
 						</Box>
 					))}
