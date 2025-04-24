@@ -12,7 +12,7 @@ type Props = {
 
 const GlobalBans = ({ sendMessage, champs }: Props) => {
 	const [selectedChamps, setSelectedChamps] = useState<string[]>([]);
-	const { id } = useRoomDataStore((state) => state);
+	const { id, globalBans } = useRoomDataStore((state) => state);
 
 	const sendGlobalBans = useCallback(() => {
 		const payload: SetGlobalBansMessage = {
@@ -43,42 +43,46 @@ const GlobalBans = ({ sendMessage, champs }: Props) => {
 	);
 
 	return (
-		<details style={{ paddingTop: '30px' }}>
-			<summary style={{ fontFamily: 'Arial', color: 'white', fontSize: 20, display: 'flex', justifyContent: 'center' }}>
-				Edit Global Bans
-			</summary>
-			<Grid display={'grid'} width={'60%'} gridTemplateColumns={'repeat(6, 1fr)'} gap={15}>
-				{champs.map((champ) => (
-					<Box key={champ.id} display={'flex'} justify={'center'}>
-						<Button
-							onClick={() => onClick(champ.id)}
-							width={'120px'}
-							height={'150px'}
-							bg={'#121212'}
-							outline={'none'}
-							borderRadius={'10px'}
-							_hover={{ bg: isBanned(champ.id) ? '#121212' : '#202020' }}
-							p={0}
-						>
-							<Box
-								width={'100%'}
-								height={'100%'}
-								bg={isBanned(champ.id) ? '#FF222244' : ''}
-								m={0}
+		<>
+			<details style={{ paddingTop: '30px' }}>
+				<summary
+					style={{ fontFamily: 'Arial', color: 'white', fontSize: 20, display: 'flex', justifyContent: 'center' }}
+				>
+					Edit Global Bans
+				</summary>
+				<Grid display={'grid'} width={'60%'} gridTemplateColumns={'repeat(6, 1fr)'} gap={15}>
+					{champs.map((champ) => (
+						<Box key={champ.id} display={'flex'} justify={'center'}>
+							<Button
+								onClick={() => onClick(champ.id)}
+								width={'120px'}
+								height={'150px'}
+								bg={'#121212'}
+								outline={'none'}
 								borderRadius={'10px'}
+								_hover={{ bg: isBanned(champ.id) ? '#121212' : '#202020' }}
+								p={0}
 							>
-								<Box display={'flex'} justify={'center'} alignItems={'center'} p={'10px'}>
-									<Image src={champ.img} alt={`${champ.name}`} width={100} height={100} loading="lazy" />
+								<Box
+									width={'100%'}
+									height={'100%'}
+									bg={isBanned(champ.id) ? '#FF222244' : ''}
+									m={0}
+									borderRadius={'10px'}
+								>
+									<Box display={'flex'} justify={'center'} alignItems={'center'} p={'10px'}>
+										<Image src={champ.img} alt={`${champ.name}`} width={100} height={100} loading="lazy" />
+									</Box>
+									<Text fontSize={13} m={0} pb={'10px'} color={'white'}>
+										{champ.name}
+									</Text>
 								</Box>
-								<Text fontSize={13} m={0} pb={'10px'} color={'white'}>
-									{champ.name}
-								</Text>
-							</Box>
-						</Button>
-					</Box>
-				))}
-			</Grid>
-		</details>
+							</Button>
+						</Box>
+					))}
+				</Grid>
+			</details>
+		</>
 	);
 };
 
