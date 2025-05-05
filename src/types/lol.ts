@@ -22,3 +22,8 @@ export type ChampInfo = {
 export type ChampsResponse = {
 	data: { [index in string]: RawChampInfo };
 };
+
+export type FearlessBansResponse = {
+	red: string[];
+	blue: string[];
+};

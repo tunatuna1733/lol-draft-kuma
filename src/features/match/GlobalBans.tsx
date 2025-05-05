@@ -1,9 +1,10 @@
+import TextInput from '@/components/TextInput';
 import { useRoomDataStore } from '@/stores/RoomData';
-import type { ChampInfo } from '@/types/lol';
+import type { ChampInfo, FearlessBansResponse } from '@/types/lol';
 import type { SetGlobalBansMessage } from '@/types/socket';
 import { Box, Button, Grid, Text } from '@kuma-ui/core';
 import Image from 'next/image';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 type Props = {
 	sendMessage: (message: string) => Promise<void>;
@@ -12,6 +13,7 @@ type Props = {
 
 const GlobalBans = ({ sendMessage, champs }: Props) => {
 	const { id, globalBans } = useRoomDataStore((state) => state);
+	const [fearlessId, setFearlessId] = useState('');
 
 	const sendGlobalBans = useCallback(
 		(bans: string[]) => {
@@ -53,11 +55,35 @@ const GlobalBans = ({ sendMessage, champs }: Props) => {
 		[globalBans, isBanned, sendGlobalBans],
 	);
 
+	const sendFearless = useCallback(
+		async (fearlessId: string) => {
+			const fearlessBansResponse = await fetch(
+				`${process.env.NEXT_PUBLIC_WEBSOCKET_HOST}/fearless?fearlessID=${fearlessId}`,
+			);
+			const fearlessBans: FearlessBansResponse = await fearlessBansResponse.json();
+			const newBans = [...globalBans, ...fearlessBans.blue, ...fearlessBans.red];
+			sendGlobalBans(newBans);
+		},
+		[globalBans, sendGlobalBans],
+	);
+
 	return (
 		<>
 			<Text fontSize={'36px'} fontWeight={'bold'} color={'white'} fontFamily={'Arial'}>
 				Global Bans
 			</Text>
+			<Box display={'flex'} flexDirection={'row'} alignItems={'center'} gap={10} width={'30%'}>
+				<TextInput
+					id="fearless-id"
+					label="Fearless code"
+					labelProps={{ style: { fontSize: '20px', color: 'white', fontFamily: 'Arial' } }}
+					value={fearlessId}
+					setValue={setFearlessId}
+				/>
+				<Button background={'none'} border={'none'} fontSize={'40px'} onClick={() => sendFearless(fearlessId)}>
+					✅️
+				</Button>
+			</Box>
 			<Box display={'flex'} width={'60%'} overflowX={'scroll'}>
 				{globalBans.map((champID) => {
 					const champ = getChampInfo(champID);

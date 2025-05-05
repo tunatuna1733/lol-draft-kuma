@@ -40,6 +40,7 @@ export interface RoomData {
 	expire: number;
 	channelId?: string;
 	globalBans: string[];
+	fearlessId: string;
 }
 
 export interface StartPhase extends PhaseData {

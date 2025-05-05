@@ -1,6 +1,7 @@
 'use client';
 
 import BlueButton from '@/components/BlueButton';
+import CopyButton from '@/components/CopyButton';
 import TextInput from '@/components/TextInput';
 import { Lanes } from '@/data/lane';
 import { useMyData } from '@/stores/MyData';
@@ -40,7 +41,7 @@ const PickScreen = ({ sendMessage, champs, bypass }: Props) => {
 	const [myLane, setMyLane] = useState<Lane>();
 
 	const { team, name, isSpec } = useMyData((state) => state);
-	const { teams, id, globalBans } = useRoomDataStore((state) => state);
+	const { teams, id, ended, fearlessId, globalBans } = useRoomDataStore((state) => state);
 	const phaseData = usePhaseData((state) => state);
 
 	const [phaseText, setPhaseText] = useState(`${phaseData.kind}-${phaseData.team}-${phaseData.order}`);
@@ -145,7 +146,21 @@ const PickScreen = ({ sendMessage, champs, bypass }: Props) => {
 	);
 
 	if (isSpec) {
-		return <PickList sendMessage={sendMessage} champs={champs} />;
+		return (
+			<>
+				<PickList sendMessage={sendMessage} champs={champs} />
+				{ended && (
+					<Box display={'flex'} flexDirection={'row'} justifyContent={'center'} gap={10} width={'100%'} mt={'50px'}>
+						<Text color={'white'} fontFamily={'Arial'} fontSize={'20px'}>
+							Fearless code: {fearlessId}
+						</Text>
+						<Box w={'50px'}>
+							<CopyButton text={fearlessId} />
+						</Box>
+					</Box>
+				)}
+			</>
+		);
 	}
 
 	return (
