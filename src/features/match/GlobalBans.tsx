@@ -5,6 +5,7 @@ import type { SetGlobalBansMessage } from '@/types/socket';
 import { Box, Button, Grid, Text } from '@kuma-ui/core';
 import Image from 'next/image';
 import { useCallback, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 
 type Props = {
 	sendMessage: (message: string) => Promise<void>;
@@ -61,14 +62,25 @@ const GlobalBans = ({ sendMessage, champs }: Props) => {
 				`${process.env.NEXT_PUBLIC_WEBSOCKET_HOST}/fearless?fearlessID=${fearlessId}`,
 			);
 			const fearlessBans: FearlessBansResponse = await fearlessBansResponse.json();
-			const newBans = [...globalBans, ...fearlessBans.blue, ...fearlessBans.red];
+			const newBans = Array.from(new Set([...globalBans, ...fearlessBans.blue, ...fearlessBans.red]));
 			sendGlobalBans(newBans);
+			toast.success('Fearless bans added!');
 		},
 		[globalBans, sendGlobalBans],
 	);
 
 	return (
 		<>
+			<Toaster
+				position="bottom-right"
+				toastOptions={{
+					success: {
+						style: {
+							fontFamily: 'Arial',
+						},
+					},
+				}}
+			/>
 			<Text fontSize={'36px'} fontWeight={'bold'} color={'white'} fontFamily={'Arial'}>
 				Global Bans
 			</Text>

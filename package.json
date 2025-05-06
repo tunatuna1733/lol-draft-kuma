@@ -16,6 +16,7 @@
     "next": "15.0.1",
     "react": "19.0.0-rc-69d4b800-20241021",
     "react-dom": "19.0.0-rc-69d4b800-20241021",
+    "react-hot-toast": "^2.5.2",
     "react-tooltip": "^5.28.0",
     "worker-timers": "^8.0.10",
     "zustand": "^5.0.0"
