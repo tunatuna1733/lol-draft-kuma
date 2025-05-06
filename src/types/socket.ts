@@ -94,6 +94,7 @@ export interface DraftImageMessage extends BaseMessage {
 	command: 'DraftImage';
 	image: string;
 	channelId?: string;
+	fearlessId: string;
 }
 
 export interface SetGlobalBansMessage extends BaseMessage {

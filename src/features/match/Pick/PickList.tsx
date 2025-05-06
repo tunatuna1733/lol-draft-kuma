@@ -33,12 +33,13 @@ const PickList = ({ sendMessage, champs }: Props) => {
 					roomID: roomData.id,
 					image: dataUrl,
 					channelId: roomData.channelId,
+					fearlessId: roomData.fearlessId,
 				};
 				sendMessage(JSON.stringify(payload));
 				setImageSent(true);
 			});
 		}
-	}, [roomData.ended, roomData.id, roomData.channelId, sendMessage, imageSent]);
+	}, [roomData.ended, roomData.id, roomData.channelId, roomData.fearlessId, sendMessage, imageSent]);
 
 	return (
 		<Box height={'520px'} bg={'#121212'} ref={ref}>
