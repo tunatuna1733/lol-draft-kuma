@@ -2,9 +2,9 @@
 
 import BlueButton from '@/components/BlueButton';
 import { useTeamDataStore } from '@/stores/TeamData';
-import type { TeamCreateDraftMessage } from '@/types/team';
+import type { TeamBalanceMessage, TeamCreateDraftMessage } from '@/types/team';
 import useTeamSocket from '@/utils/TeamSocket';
-import { Box, Heading } from '@kuma-ui/core';
+import { Box, Heading, Input } from '@kuma-ui/core';
 import Link from 'next/link';
 import { useCallback, useState } from 'react';
 import AddPlayerModal from './AddPlayerModal';
@@ -18,6 +18,7 @@ type Props = {
 
 const TeamCreator = ({ teamID }: Props) => {
 	const [isModalOpen, setModalOpen] = useState(false);
+	const [excludeJungle, setExcludeJungle] = useState(false);
 
 	const { sendMessage } = useTeamSocket(teamID);
 	const teamData = useTeamDataStore((state) => state);
@@ -30,6 +31,15 @@ const TeamCreator = ({ teamID }: Props) => {
 		};
 		sendMessage(JSON.stringify(payload));
 	}, [teamID, sendMessage]);
+
+	const handleAutoBalance = useCallback(async () => {
+		const payload: TeamBalanceMessage = {
+			command: 'Balance',
+			id: teamID,
+			excludeJungle,
+		};
+		sendMessage(JSON.stringify(payload));
+	}, [teamID, excludeJungle, sendMessage]);
 
 	return (
 		<>
@@ -202,13 +212,36 @@ const TeamCreator = ({ teamID }: Props) => {
 			</BlueButton>
 			{isReady && teamData.draftId === '' && (
 				<BlueButton
-					props={{ position: 'fixed', top: '80%', left: '5%', fontSize: 30, p: '20px' }}
+					props={{ position: 'fixed', top: '90%', left: '5%', fontSize: 30, p: '20px' }}
 					onClick={async () => {
 						await handleCreateDraft();
 					}}
 				>
 					Create Draft Room
 				</BlueButton>
+			)}
+			{teamData.Blue.length === 5 && teamData.Red.length === 5 && (
+				<>
+					<Box position={'fixed'} top={'75%'} left={'5%'}>
+						<Input
+							type="checkbox"
+							id="exjg"
+							checked={excludeJungle}
+							onChange={(e) => setExcludeJungle(e.target.checked)}
+						/>
+						<label htmlFor="exjg" style={{ color: 'white', fontSize: 20, fontFamily: 'Arial' }}>
+							Exclude Jungle
+						</label>
+					</Box>
+					<BlueButton
+						props={{ position: 'fixed', top: '80%', left: '5%', fontSize: 30, p: '20px' }}
+						onClick={async () => {
+							await handleAutoBalance();
+						}}
+					>
+						Auto Balance
+					</BlueButton>
+				</>
 			)}
 			{isModalOpen && (
 				<AddPlayerModal teamID={teamID} sendMessage={sendMessage} closeModal={() => setModalOpen(false)} />

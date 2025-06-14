@@ -1,4 +1,4 @@
-import type { Lane, Team } from './lol';
+import type { Lane, RankedDivision, RankedTier, Team } from './lol';
 
 interface BaseMessage {
 	id: string;
@@ -33,11 +33,31 @@ export interface TeamCreateDraftMessage extends BaseMessage {
 	command: 'CreateDraft';
 }
 
+export interface TeamBalanceMessage extends BaseMessage {
+	command: 'Balance';
+	excludeJungle: boolean;
+}
+
 export interface PlayerData {
+	id: string;
 	name: string;
 	icon: string;
 	lane: Lane | '';
-	beginner: boolean;
+	level: number;
+	SOLO?: {
+		tier: RankedTier;
+		rank: RankedDivision;
+		leaguePoints: number;
+		points: number;
+		winRate: number;
+	};
+	FLEX?: {
+		tier: RankedTier;
+		rank: RankedDivision;
+		leaguePoints: number;
+		points: number;
+		winRate: number;
+	};
 }
 
 export interface TeamCreationData {
