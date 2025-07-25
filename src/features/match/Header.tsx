@@ -81,7 +81,9 @@ const Header = ({ sendMessage }: Props) => {
 				)}
 			</Box>
 			<Box width={'100%'} height={'100px'}>
-				{roomData.started && !roomData.ended && <ToggleButton sendMessage={sendMessage} />}
+				{roomData.noPause === false && roomData.started && !roomData.ended && (
+					<ToggleButton sendMessage={sendMessage} />
+				)}
 			</Box>
 			<Box width={'100%'}>
 				<Box

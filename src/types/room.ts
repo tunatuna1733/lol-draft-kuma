@@ -41,6 +41,7 @@ export interface RoomData {
 	channelId?: string;
 	globalBans: string[];
 	fearlessId: string;
+	noPause: boolean;
 }
 
 export interface StartPhase extends PhaseData {
