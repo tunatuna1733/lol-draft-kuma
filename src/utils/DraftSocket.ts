@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 const useDraftSocket = () => {
 	const [ws, setWs] = useState<WebSocket>();
 	const setSpec = useMyData((state) => state.setSpec);
+	const setRoomNotFound = useMyData((state) => state.setRoomNotFound);
 
 	useEffect(() => {
 		const url = process.env.NEXT_PUBLIC_WEBSOCKET_HOST || '';
@@ -17,6 +18,9 @@ const useDraftSocket = () => {
 			if (ev.data === 'KeepAlive') return;
 			const data: RoomData | StartPhase | CurrentPhase | ResultMessage | MakeSpec = JSON.parse(ev.data);
 			if ('success' in data) {
+				if (data.success === false && 'message' in data && data.message === 'Room not found') {
+					setRoomNotFound(true);
+				}
 				return;
 			}
 			if ('command' in data) {
@@ -36,7 +40,7 @@ const useDraftSocket = () => {
 				}
 			}
 		};
-	}, [setSpec]);
+	}, [setSpec, setRoomNotFound]);
 
 	const sendMessage = async (message: string) => {
 		if (ws) ws.send(message);

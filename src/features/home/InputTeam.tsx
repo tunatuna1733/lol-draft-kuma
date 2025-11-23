@@ -2,6 +2,7 @@
 
 import BlueButton from '@/components/BlueButton';
 import CopyButton from '@/components/CopyButton';
+import NewTabButton from '@/components/NewTabButton';
 import TextInput from '@/components/TextInput';
 import { Box } from '@kuma-ui/core';
 import { useState } from 'react';
@@ -73,6 +74,9 @@ const InputTeam = () => {
 					/>
 				</Box>
 				<Box width={'50px'} height={'50px'} display={'flex'} alignItems={'center'} mt={'20px'}>
+					<NewTabButton url={`${window.location}/${matchID}?team=Blue`} />
+				</Box>
+				<Box width={'50px'} height={'50px'} display={'flex'} alignItems={'center'} mt={'20px'}>
 					<CopyButton text={`${window.location}/${matchID}?team=Blue`} />
 				</Box>
 			</Box>
@@ -87,6 +91,9 @@ const InputTeam = () => {
 					/>
 				</Box>
 				<Box width={'50px'} height={'50px'} display={'flex'} alignItems={'center'} mt={'20px'}>
+					<NewTabButton url={`${window.location}/${matchID}?team=Red`} />
+				</Box>
+				<Box width={'50px'} height={'50px'} display={'flex'} alignItems={'center'} mt={'20px'}>
 					<CopyButton text={`${window.location}/${matchID}?team=Red`} />
 				</Box>
 			</Box>
@@ -99,6 +106,9 @@ const InputTeam = () => {
 						isReadOnly={true}
 						inputProps={{ background: '#37415133' }}
 					/>
+				</Box>
+				<Box width={'50px'} height={'50px'} display={'flex'} alignItems={'center'} mt={'20px'}>
+					<NewTabButton url={`${window.location}/${matchID}`} />
 				</Box>
 				<Box width={'50px'} height={'50px'} display={'flex'} alignItems={'center'} mt={'20px'}>
 					<CopyButton text={`${window.location}/${matchID}`} />

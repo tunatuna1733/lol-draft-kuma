@@ -18,6 +18,16 @@ const DraftScreen = ({ sendMessage, champs, bypass }: Props) => {
 	const roomData = useRoomDataStore((state) => state);
 	const myData = useMyData((state) => state);
 
+	if (myData.isRoomNotFound) {
+		return (
+			<Box width={'100%'} height={'100%'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+				<Text fontSize="24px" color="red">
+					Room not found.
+				</Text>
+			</Box>
+		);
+	}
+
 	if (!roomData.started) {
 		// waiting for player
 		return (

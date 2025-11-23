@@ -10,6 +10,8 @@ type Props = {
 	sendMessage: (message: string) => Promise<void>;
 };
 
+const timerOffset = 3;
+
 const Header = ({ sendMessage }: Props) => {
 	const [timer, setTimer] = useState(0);
 	const roomData = useRoomDataStore((state) => state);
@@ -17,9 +19,9 @@ const Header = ({ sendMessage }: Props) => {
 	const myTeam = useMyData((state) => state.team);
 
 	useEffect(() => {
-		setTimer(phaseData.remainingTime / 1000);
+		setTimer(phaseData.remainingTime / 1000 - timerOffset);
 		const interval = setInterval(() => {
-			if (!phaseData.paused) setTimer((prev) => prev - 0.5);
+			if (!phaseData.paused) setTimer((prev) => (prev - 0.5 < 0 ? 0 : prev - 0.5));
 		}, 500);
 
 		return () => {

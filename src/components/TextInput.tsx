@@ -21,6 +21,7 @@ const TextInput = ({ id, label, placeholder, value, setValue, labelProps, inputP
 					color: 'white',
 					fontWeight: '500',
 					marginBottom: 3,
+					fontFamily: 'Arial',
 				}}
 				{...labelProps}
 			>
