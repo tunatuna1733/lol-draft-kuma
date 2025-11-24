@@ -212,9 +212,13 @@ const TeamPlayer = ({ player, teamID, sendMessage, listed }: Props) => {
 				</Box>
 			</Box>
 			<Tooltip anchorSelect={`#${player.name}-tier`} place="bottom" style={{ zIndex: 200, fontFamily: 'Consolas' }}>
+				{`Level: ${player.level}`}
+				<br />
 				{`SOLO: ${player.SOLO?.tier} ${player.SOLO?.rank} ${player.SOLO?.leaguePoints}LP`}
 				<br />
 				{`FLEX: ${player.FLEX?.tier} ${player.FLEX?.rank} ${player.FLEX?.leaguePoints}LP`}
+				<br />
+				{`Elo: ${player.elo}`}
 			</Tooltip>
 		</>
 	);

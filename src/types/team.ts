@@ -13,9 +13,11 @@ export interface TeamPickLaneMessage extends BaseMessage {
 export interface TeamAddPlayerMessage extends BaseMessage {
 	command: 'AddPlayer';
 	name: string;
-	icon: string;
+	icon?: string;
 	lane: Lane | '';
 	beginner: boolean;
+	gameName?: string;
+	tagLine?: string;
 }
 
 export interface TeamTransferPlayerMessage extends BaseMessage {
@@ -36,6 +38,7 @@ export interface TeamCreateDraftMessage extends BaseMessage {
 export interface TeamBalanceMessage extends BaseMessage {
 	command: 'Balance';
 	excludeJungle: boolean;
+	balancingRank: number;
 }
 
 export interface PlayerData {
@@ -44,6 +47,7 @@ export interface PlayerData {
 	icon: string;
 	lane: Lane | '';
 	level: number;
+	elo: number;
 	SOLO?: {
 		tier: RankedTier;
 		rank: RankedDivision;

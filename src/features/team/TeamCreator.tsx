@@ -19,6 +19,7 @@ type Props = {
 const TeamCreator = ({ teamID }: Props) => {
 	const [isModalOpen, setModalOpen] = useState(false);
 	const [excludeJungle, setExcludeJungle] = useState(false);
+	const [balancingRank, setBalancingRank] = useState(1);
 
 	const { sendMessage } = useTeamSocket(teamID);
 	const teamData = useTeamDataStore((state) => state);
@@ -37,9 +38,10 @@ const TeamCreator = ({ teamID }: Props) => {
 			command: 'Balance',
 			id: teamID,
 			excludeJungle,
+			balancingRank: balancingRank - 1,
 		};
 		sendMessage(JSON.stringify(payload));
-	}, [teamID, excludeJungle, sendMessage]);
+	}, [teamID, excludeJungle, balancingRank, sendMessage]);
 
 	return (
 		<>
@@ -222,6 +224,21 @@ const TeamCreator = ({ teamID }: Props) => {
 			)}
 			{teamData.Blue.length === 5 && teamData.Red.length === 5 && (
 				<>
+					<Box position={'fixed'} top={'70%'} left={'5%'}>
+						<label htmlFor="rank" style={{ color: 'white', fontSize: 20, fontFamily: 'Arial', marginRight: '10px' }}>
+							Rank
+						</label>
+						<select
+							id="rank"
+							value={balancingRank}
+							onChange={(e) => setBalancingRank(Number(e.target.value))}
+							style={{ fontSize: 20 }}
+						>
+							<option value={1}>1</option>
+							<option value={2}>2</option>
+							<option value={3}>3</option>
+						</select>
+					</Box>
 					<Box position={'fixed'} top={'75%'} left={'5%'}>
 						<Input
 							type="checkbox"

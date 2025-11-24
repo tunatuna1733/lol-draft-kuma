@@ -13,18 +13,20 @@ type Props = {
 
 const AddPlayerModal = ({ teamID, sendMessage, closeModal }: Props) => {
 	const [name, setName] = useState('');
-	const [icon, setIcon] = useState('');
+	const [gameName, setGameName] = useState('');
+	const [tagLine, setTagLine] = useState('');
 	const [lane, setLane] = useState<Lane | ''>('');
 
 	const addPlayer = useCallback(
-		(name: string, icon: string, lane: Lane | '') => {
+		(name: string, lane: Lane | '', gameName?: string, tagLine?: string) => {
 			const payload: TeamAddPlayerMessage = {
 				id: teamID,
 				command: 'AddPlayer',
 				name,
-				icon,
 				lane,
 				beginner: false,
+				gameName,
+				tagLine,
 			};
 			sendMessage(JSON.stringify(payload));
 		},
@@ -59,7 +61,15 @@ const AddPlayerModal = ({ teamID, sendMessage, closeModal }: Props) => {
 					<TextInput id="add-player-name" label="Player name" value={name} setValue={setName} />
 				</Box>
 				<Box display={'flex'} flexDirection={'column'} width={'90%'} mb={'40px'}>
-					<TextInput id="add-player-icon" label="Player icon (optional)" value={icon} setValue={setIcon} />
+					<TextInput
+						id="add-player-gamename"
+						label="Riot game name (optional)"
+						value={gameName}
+						setValue={setGameName}
+					/>
+				</Box>
+				<Box display={'flex'} flexDirection={'column'} width={'90%'} mb={'40px'}>
+					<TextInput id="add-player-tagline" label="Riot tag line (optional)" value={tagLine} setValue={setTagLine} />
 				</Box>
 				<Box display={'flex'} flexDirection={'row'} alignItems={'center'} mb={'60px'}>
 					<Text color={'white'}>Lane (optional)</Text>
@@ -86,7 +96,7 @@ const AddPlayerModal = ({ teamID, sendMessage, closeModal }: Props) => {
 				<BlueButton
 					onClick={() => {
 						if (name !== '') {
-							addPlayer(name, icon, lane);
+							addPlayer(name, lane, gameName, tagLine);
 							closeModal();
 						}
 					}}
